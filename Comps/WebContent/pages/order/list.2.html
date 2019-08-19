@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>订单列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="../../static/css/font.css">
+		<link rel="stylesheet" href="../../static/css/weadmin.css">
+		<link href="../../lib/layui/css/style-responsive.css" rel="stylesheet">
+		<link href="../../lib/layui/css/style.css" rel="stylesheet">
+		
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
+	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body class="body">
+
+<!-- 工具集 -->
+<div class="my-btn-box">
+    <span class="fl">
+        <a class="layui-btn layui-btn-danger radius btn-delect" id="btn-add-all">批量添加</a>
+        <a class="layui-btn btn-add btn-default" id="btn-get">采集设备总数</a>
+        <a class="layui-btn btn-add btn-default" id="btn-add">添加</a>
+        <a class="layui-btn btn-add btn-default" id="btn-refresh"><i class="layui-icon">&#x1002;</i></a>
+    </span>
+    <span class="fr">
+
+        <div class="demoTable">
+            <span class="layui-form-label">搜索条件：</span>
+            <!--// 搜索ID：-->
+        <div class="layui-inline">
+         <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="请输入搜索条件">
+        </div>
+        <button class="layui-btn" data-type="reload">查询</button>
+        </div>
+    </span>
+</div>
+
+
+<!--&lt;!&ndash; 表格 &ndash;&gt;-->
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<!-- 表格操作按钮集 -->
+<script type="text/html" id="barOption">
+    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-mini layui-btn-normal" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del">删除</a>
+</script>
+ <div class="panel">
+<div class="panel-body">
+                <h1 class="text-center cmnt-head">5 Comments</h1>
+                <div class="media blog-cmnt">
+                    <a href="javascript:;" class="pull-left">
+                        <img alt="" src="../../lib/layui/images/blog/blog-avatar-2.jpg" class="media-object">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">jones1</a>
+                        </h4>
+                        <div class="bl-status">
+                            <span class="pull-left">About 10 Min ago</span>
+                            <a href="#" class="pull-right reply">Reply</a>
+                        </div>
+                        <p class="mp-less">
+                            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit.
+                        </p>
+                    </div>
+                </div>
+                <div class="media blog-cmnt">
+                    <a href="javascript:;" class="pull-left">
+                        <img alt="" src="../../lib/layui/images/blog/blog-avatar.jpg" class="media-object">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a href="#">jones2</a>
+                        </h4>
+                        <div class="bl-status">
+                            <span class="pull-left">About 10 Min ago</span>
+                            <a href="#" class="pull-right reply">Reply</a>
+                        </div>
+                        <p class="mp-less">
+                            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit.
+                        </p>
+                        <div class="media blog-cmnt">
+                           
+                                <img alt="" src="../../lib/layui/images/gallery/image1.jpg" class="media-object-child pull-left">
+                          
+                           
+                                <img alt="" src="../../lib/layui/images/gallery/image2.jpg" class="media-object-child pull-left">
+                           
+							    <img alt="" src="../../lib/layui/images/gallery/image3.jpg" class="media-object-child pull-left">
+							
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+			 <div class="panel">
+			    <div class="panel-body">
+			        <h1 class="text-center cmnt-head ">Leave a Comments</h1>
+			        <p class="text-center fade-txt">If you want you can <a href="#">Cancel Reply</a></p>
+			
+			        <form role="form" class="form-horizontal leave-cmnt">
+			            <div class="form-group">
+			                <div class="col-lg-12">
+			                    <input type="text" class="col-lg-12 form-control" placeholder="Name *">
+			                </div>
+			            </div>
+			            <div class="form-group">
+			                <div class="col-lg-12">
+			                    <input type="text" class="col-lg-12 form-control" placeholder="Email *">
+			                </div>
+			
+			            </div>
+			            <div class="form-group">
+			                <div class="col-lg-12">
+			                    <textarea class=" form-control" rows="8" placeholder="Message"></textarea>
+			                </div>
+			            </div>
+			            <p>
+			                <button class="btn btn-post-cmnt pull-right" type="submit">Post Comment</button>
+			            </p>
+			        </form>
+			    </div>
+			</div>
+<script src="../../js/jquery-1.10.2.min.js" type="text/text/javascript"></script>
+<script src="../../lib/layui/layui.all.js" charset="utf-8"></script>
+
+
+
+<!--
+<script src="../../lib/layui/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="../../lib/layui/modernizr.min.js"></script>
+<script src="../../lib/layui/jquery-migrate-1.2.1.min.js"></script>
+<script src="../../lib/layui/jquery.nicescroll.js"></script>
+
+<script src="../../lib/layui/bootstrap.min.js"></script>
+<script src="../../lib/layui/scripts.js"></script>			-->
+<script>
+    layui.use(['table', 'form', 'layer'], function () {
+// 操作对象  , 'vip_table'
+        var form = layui.form
+            , table = layui.table
+            , layer = layui.layer
+            , vipTable = layui.vip_table
+            ,$=layui.jquery
+        // 表格渲染
+        var tableIns = table.render({
+            elem: '#test'                  //指定原始表格元素选择器（推荐id选择器）
+            //, height: vipTable.getFullHeight()    //容器高度
+            , toolbar: '#toolbarDemo'
+            , title: '采集设备表'
+            , cols: [[                  //标题栏
+                {checkbox: true, sort: true, fixed: true, space: true}
+                , {field: 'eqptType', title: 'eqptType', width: 150}
+                , {field: 'eqptTypeName', title: 'eqptTypeName', width: 180}                
+                , {fixed: 'right', width: 178, align: 'center', toolbar: '#barOption'}
+            ]],		
+			limit:5		
+            , id: 'dataCheck'
+            , url: '../../json/user.1.json'
+            , method: 'get'
+            , page: true
+            , limits: [5,10,20,100]
+            , loading: true		
+            , done: function (res) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+            }
+        });
+        //监听表格复选框选择
+        table.on('checkbox(demo)', function (obj) {
+            console.log(obj)
+        });
+        //监听工具条
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'detail') {
+                layer.msg('ID：' + data.eqptType + ' 的查看操作');
+            } else if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: "/*********",
+                        type: "POST",
+                        data: {eqptType: data.eqptType, eqptIdCode: data.eqptIdCode},
+                          success: function (msg) {
+                           var json=JSON.parse(msg);
+                            var returnCode=json.returnCode;
+                            if (returnCode== 200) {
+                                //删除这一行，前端界面的修改，直接删除了这一条数据
+                                obj.del();
+                                //关闭弹框
+                                layer.close(index);
+                                //显示提示框
+                                layer.msg("删除成功", {icon: 6});
+                            } else {
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+                    });
+                    return false;
+                });
+            } else if (obj.event === 'edit') {
+      
+            }
+        });
+
+        //添加采集设备
+        $('#btn-add').on('click', function () {
+            layer.open({
+                type: 2,
+                title: '采集设备添加',
+                maxmin: true,
+                area: ['420px', '330px'],
+                shadeClose: false, //点击遮罩关闭
+                content: 'CollectorAdd-form.html',
+            });
+        });
+        //搜索功能的实现
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        var $ = layui.$, active = {
+            reload: function () {
+                var demoReload = $('#demoReload');
+
+                //执行重载
+                table.reload('dataCheck', {
+					page: {
+					  curr: 1 //重新从第 1 页开始
+					},
+                    where: {
+                        //key: {
+                            'eqptType': 'oc02',
+							'eqptTypeName':'会2员管理'
+                       // }
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+
+        // 刷新
+        $('#btn-refresh').on('click', function () {
+            tableIns.reload()
+        });
+    });
+</script>
+</body>
+
+</html>

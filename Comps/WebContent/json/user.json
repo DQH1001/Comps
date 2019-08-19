@@ -1,0 +1,35 @@
+{"msg":"查询记录成功",
+"code":0,
+"count":20,
+	"data":[{    
+			"id": 1,
+			"uname": "会员管理",
+			"role": "admin",
+			"registerTime": "2019.01.02",
+			"lastLoginTime": "2019.01.02"
+		   },{    
+				"id": 2,
+				"uname": "会2员管理",
+				"role": "admin",
+				"registerTime": "2019.02.02",
+				"lastLoginTime": "2019.02.02"
+			}, {    
+			   		"id": 3,
+			   		"uname": "会3员管理",
+			   		"role": "admin3",
+			   		"registerTime": "2019.03.02",
+			   		"lastLoginTime": "2019.01.03"
+			},{    
+				   		"id": 4,
+				   		"uname": "会4员管理",
+				   		"role": "admin",
+				   		"registerTime": "2019.04.02",
+				   		"lastLoginTime": "2019.04.02"
+			},{    
+					   		"id": 5,
+					   		"uname": "会员5管理",
+					   		"role": "admin",
+					   		"registerTime": "2019.05.02",
+					   		"lastLoginTime": "2019.01.05"
+			}]
+}

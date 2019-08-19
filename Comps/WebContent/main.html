@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="box">
+	<input type="button" @click="post()" value="点我异步获取数据(Post)">
+</div>
+		<script type="text/javascript" src="js/vue.js"></script>
+		<script type="text/javascript" src="js/vue-resource.min.js"></script>
+		<script type = "text/javascript">
+window.onload = function(){
+	var vm = new Vue({
+	    el:'#box',
+	    data:{
+	        msg:'Hello World!',
+	    },
+	    methods:{
+	        post:function(){
+	            //发送 post 请求
+	            this.$http.post('https://www.runoob.com/try/ajax/demo_test_post.php',
+				{name:"菜鸟教程",url:"http://www.runoob.com"},{emulateJSON:true})
+				.then(function(res){
+                    document.write(res.body);    
+                },function(res){
+                    console.log(res.status);
+                });
+	        }
+	    }
+	});
+}
+</script>
+	</body>
+</html>

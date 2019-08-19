@@ -1,0 +1,47 @@
+{"msg":"查询记录成功",
+"code":0,
+"count":20,
+	"data":[{    
+			"eqptType": "oc01",
+			"eqptTypeName": "会员管理",
+			"eqptIdCode": "admin",
+			"eqptName": "2019.01.02",
+			"createTime": "2019.01.02",
+			"creator":"peter"
+		   },{    
+				"eqptType": "oc02",
+				"eqptTypeName": "会2员管理",
+				"eqptIdCode": "admin2",
+				"eqptName": "2019.02.02",
+				"createTime": "2019.02.02",
+				"creator":"peter2"
+			}, {    
+			   	"eqptType": "oc03",
+			   	"eqptTypeName": "会3员管理",
+			   	"eqptIdCode": "admin3",
+			   	"eqptName": "2019.03.02",
+			   	"createTime": "2019.03.02",
+			   	"creator":"peter3"
+			},{    
+				"eqptType": "oc04",
+				"eqptTypeName": "会4员管理",
+				"eqptIdCode": "admin4",
+				"eqptName": "2019.04.02",
+				"createTime": "2019.04.02",
+				"creator":"peter4"
+			},{    
+				"eqptType": "oc05",
+				"eqptTypeName": "会5员管理",
+				"eqptIdCode": "admin5",
+				"eqptName": "2019.05.02",
+				"createTime": "2019.05.02",
+				"creator":"peter5"
+			},{    
+				"eqptType": "oc06",
+				"eqptTypeName": "会6员管理",
+				"eqptIdCode": "admin6",
+				"eqptName": "2019.05.06",
+				"createTime": "2019.05.06",
+				"creator":"peter6"
+			}]
+}

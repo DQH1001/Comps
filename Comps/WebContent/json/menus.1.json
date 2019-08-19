@@ -1,0 +1,105 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 19,
+  "data": [{
+      "authorityId": 1,
+      "authorityName": "系统管理",
+      "orderNumber": 1,
+      "menuUrl": null,
+      "menuIcon": "layui-icon-set",
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/07/13 09:13:42",
+      "isMenu": 0,
+      "parentId": -1
+    },{
+      "authorityId": 2,
+      "authorityName": "用户管理",
+      "orderNumber": 2,
+      "menuUrl": "system/user",
+      "menuIcon": null,
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/07/13 09:13:42",
+      "isMenu": 0,
+      "parentId": 1
+    },{
+      "authorityId": 7,
+      "authorityName": "角色管理",
+      "orderNumber": 7,
+      "menuUrl": "system/role",
+      "menuIcon": null,
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/07/13 09:13:42",
+      "isMenu": 0,
+      "parentId": 1
+    }, {
+      "authorityId": 13,
+      "authorityName": "权限管理",
+      "orderNumber": 13,
+      "menuUrl": "system/authorities",
+      "menuIcon": null,
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/07/13 15:45:13",
+      "isMenu": 0,
+      "parentId": 1
+    }, {
+      "authorityId": 18,
+      "authorityName": "登录日志",
+      "orderNumber": 18,
+      "menuUrl": "system/loginRecord",
+      "menuIcon": null,
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/06/29 11:05:41",
+      "isMenu": 0,
+      "parentId": -1
+    },
+    {
+      "authorityId": 19,
+      "authorityName": "查询登录日志",
+      "orderNumber": 19,
+      "menuUrl": "",
+      "menuIcon": "",
+      "createTime": "2018/07/21 13:56:43",
+      "authority": "loginRecord:view",
+      "checked": 0,
+      "updateTime": "2018/07/21 13:56:43",
+      "isMenu": 1,
+      "parentId": 18
+    }, {
+      "authorityId": 12,
+      "authorityName": "登录日志1",
+      "orderNumber": 18,
+      "menuUrl": "system/loginRecord",
+      "menuIcon": null,
+      "createTime": "2018/06/29 11:05:41",
+      "authority": null,
+      "checked": 0,
+      "updateTime": "2018/06/29 11:05:41",
+      "isMenu": 0,
+      "parentId": -1
+    },
+    {
+      "authorityId": 19,
+      "authorityName": "查询登录日志1",
+      "orderNumber": 19,
+      "menuUrl": "",
+      "menuIcon": "",
+      "createTime": "2018/07/21 13:56:43",
+      "authority": "loginRecord:view",
+      "checked": 0,
+      "updateTime": "2018/07/21 13:56:43",
+      "isMenu": 1,
+      "parentId": 12
+    }
+  ]
+}

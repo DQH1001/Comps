@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context
+	                       http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                           http://www.springframework.org/schema/aop
+	                       http://www.springframework.org/schema/aop/spring-aop.xsd">
+     <!-- 包注入 多个   ,com.spring.-->
+    <context:component-scan base-package="com.ssm.controller,com.ssm.model">
+    </context:component-scan>
+    <!-- 配置数据源  整合mybatis
+     jar系统类对象DriverManagerDataSource类，中可以有一setter方法    org.gjt.mm.mysql.Driver-->
+    <bean id="jdbcDataSource"  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url"
+                  value="jdbc:mysql://127.0.0.1:3306/company?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>123456</value>
+        </property>
+    </bean>
+    <!--mybatis接口编程的核心接口和核心的xml配置文件,DriverManagerDataSource的bean实例对象，注入给了SqlSessionFactoryBean
+    对应setter方法的对象-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">   
+        <property name="dataSource" ref="jdbcDataSource" />
+        <!-- classpath:com/ssm/model/*.xml src下com.ssm.model下的所有mybatis xml配置 -->
+        <property name="mapperLocations" value="classpath:com/ssm/mapper/*.xml"></property>
+    </bean>
+    <!-- com.ssm.model 包:mybatis核心操作的接口，和核心操作的xml
+    类似于把mybatis所有操作的接口 整个包匹配注入了 -->
+    <bean name="ScannerName" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ssm.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+    <!-- 配置Spring整合 SPringMVC  支配SpringMVC操作，注入页面跳转的核心扩展名 .html
+    对应每一个mvc方法的注解@Controller()-->
+    <bean id="viewResovle"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          abstract="false" lazy-init="default" autowire="default">
+        <!-- 注入视图的核心类对象 -->
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"></property>
+        <!-- 默认项目的所有页面html or jsp都是在项目的根目录下  / -->
+        <property name="prefix" value="/"></property>
+        <!-- 指明所有的页面都是以为扩展名 -->
+        <property name="suffix" value=".html"></property>
+    </bean>
+    <!--Spring上传二进制配置 bean，为@RequestParam("file1")MultipartFile file对象服务的-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8" />
+        <property name="maxUploadSize" value="104857600" />
+        <property name="maxInMemorySize" value="4096" />
+    </bean>
+    <!-- 配置 json jackson jar
+    如果利用jackson jar为异步json服务，那么必须把jackson jar注入到 springframework中
+    @ResponseBody  去访问以下配置信息
+    spring core jar 接纳 jackson jar操作的一个配置信息-->
+    <bean id="mappingJackson2HttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <!-- jackson ajax jar注入给了springmvc @ 注解管理核心类对象 AnnotationMethodHandlerAdapter-->
+                <ref bean="mappingJackson2HttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+    <bean
+            class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean
+                        class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                            <value>text/json;charset=UTF-8</value>
+                            <value>text/html;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <bean
+                        class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="jdbcDataSource" />
+    </bean>
+    <!-- 注解方式配置事物 ,@方式配置事务，矛盾在于如果是@方式配置model层，那么select和非select操作
+    区分为两个类对象操作了，否则就手动xml配置事务了<aop:....>
+    @Transactional-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+</beans>
