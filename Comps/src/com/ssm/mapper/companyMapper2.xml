@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- 5.针对所有实体类对象的映射配置文件
+ 映射
+namespace="com.java.entity":针对该包下的所以实体类对象映射配置文件   -->
+<!-- 使用bind加%%需要引入如下配置 -->
+<!-- <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> -->
+<mapper namespace="com.ssm.mapper.ICompsProjectMapper">
+
+    <resultMap id="ClassesResult" type="com.ssm.entity.Classes">
+      <id column="clid" property="clid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="clname" property="clname" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="cltest" property="cltest" jdbcType="VARCHAR" javaType="string"/>  
+    </resultMap>
+
+	
+      
+	 <resultMap id="StudentResult" type="com.ssm.entity.Student">
+      <id column="sid" property="sid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="sname" property="sname" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="sdate" property="sdate" jdbcType="VARCHAR" javaType="string" />
+     <result column="spwd" property="spwd" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="choose" property="choose" jdbcType="VARCHAR" javaType="string"/>  
+      <result column="s_clid" property="s_clid" jdbcType="INTEGER" javaType="Integer" /> 
+      <result column="slogo" property="slogo" jdbcType="VARCHAR" javaType="string"/>      
+      <result column="ssex" property="ssex" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="stel" property="stel" jdbcType="VARCHAR" javaType="string" />
+     <result column="scity" property="scity" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="semail" property="semail" jdbcType="VARCHAR" javaType="string"/>   
+     <result column="menus" property="menus" jdbcType="VARCHAR" javaType="string"/>   
+      <result column="signature" property="signature" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="sresume" property="sresume" jdbcType="VARCHAR" javaType="string"/>
+     <result column="cname" property="cname" jdbcType="VARCHAR" javaType="string" />
+     <result column="pname" property="pname" jdbcType="VARCHAR" javaType="string"/>    
+     <association property="classes" javaType="com.ssm.entity.Classes"
+    	       resultMap="ClassesResult"/>
+    </resultMap>
+    
+    <resultMap id="ScoresResult" type="com.ssm.entity.Scores">
+      <id column="scid" property="scid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="s_pid" property="s_pid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="s_cid" property="s_cid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="s_sid" property="s_sid" jdbcType="INTEGER" javaType="Integer" />  
+     <result column="number" property="number" jdbcType="INTEGER" javaType="Integer" /> 
+     <association property="comps" javaType="com.ssm.entity.Comps"
+    	       resultMap="CompanyResult"/>
+    <association property="project" javaType="com.ssm.entity.Projects"
+    	       resultMap="ProjectsResult"/>
+   	<association property="stus" javaType="com.ssm.entity.Student"
+    	       resultMap="StudentResult"/> 
+    </resultMap>
+    
+   
+    <!--  查询公司中被学生选择的专业及数量，显示在企业端首页-->
+   
+     <select id="selectCompsProList" resultMap="ScoresResult">
+		SELECT 
+		DISTINCT (SELECT pname from projects where pid=s.s_pid ) pname,
+		(SELECT pdetail from projects where pid=s.s_pid ) pdetail,
+		(SELECT COUNT(*) from scores o where o.s_pid=s.s_pid and o.s_cid=s.s_cid) as number,
+		(SELECT cname from comps where cid=s.s_cid) as cname,
+		(SELECT cid from comps where cid=s.s_cid) as cid,s.s_cid from scores s order by s_cid
+    </select>  
+</mapper>
