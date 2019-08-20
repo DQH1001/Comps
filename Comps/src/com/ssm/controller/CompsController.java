@@ -1,6 +1,7 @@
 package com.ssm.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +74,14 @@ public class CompsController {
 		//获得物理路径webapp所在路径
 //		String pathRoot = request.getSession().getServletContext().getRealPath("");
 		String pathRoot=request.getRealPath("upload/comps/");
+		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+
 		String path="";
 		List<String> listImagePath=new ArrayList<String>();
+		int j=0;
 		for (MultipartFile mf : file) {			
 			if(!mf.isEmpty()){				
 				//生成uuid作为文件名称
@@ -87,6 +94,24 @@ public class CompsController {
 				System.out.println(mf.getOriginalFilename()+" name "+imageName+" - "+contentType);
 				//上传
 				mf.transferTo(new File(pathRoot+mf.getOriginalFilename()));
+
+				 // 使用getBytes()方法 上传companys项目的绝对路径上
+		        byte[] data=mf.getOriginalFilename().getBytes();		        
+		        //写出byte数组到文件
+		        File file3=null;
+		        if(j==0) {
+		        	file3=new File(pathRootClogo+mf.getOriginalFilename());		        			        
+		        }else if(j==1) {
+		        	file3=new File(pathRootTxt+mf.getOriginalFilename());	
+		        }else if(j==2) {
+		        	file3=new File(pathRootVideo+mf.getOriginalFilename());	
+		        }else {
+		        	file3=new File(pathRootLunbo+mf.getOriginalFilename());	
+		        }
+		        FileOutputStream fosWithByte=new FileOutputStream(file3);
+		        fosWithByte.write(data,0,data.length);
+		        fosWithByte.close();
+				j++;
 				listImagePath.add(mf.getOriginalFilename());
 			}
 		}
