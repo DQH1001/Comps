@@ -59,7 +59,7 @@
 	            treeIdName: 'authorityId',
 	            treePidName: 'parentId',
 	            elem: '#auth-table',
-	            url: '../../json/menus.1.json',
+	            url: '../../coms/selectCPList.action',
 	            page: true,
 				limits: [5,10,20,100],
 				limit:5,
@@ -67,19 +67,19 @@
 				loading: true,		
 	            cols: [[
 	                {type: 'numbers'},
-	                {field: 'authorityName', width: 150,minWidth: 200, title: '权限名称'},
-	                {field: 'authority', width: 150,title: '权限标识'},
-	                {field: 'menuUrl', width: 350,title: '菜单url'},
+	                {field: 'authorityName', width: 250,minWidth: 200, title: '公司名称'},
+	                {field: 'nums', width: 150,title: '已选人数'},
+	                {field: 'pdetail', width: 150,title: '专业说明'},
 	                {field: 'isMenu', width: 80, align: 'center', templet: function (d) {
 	                        if (d.isMenu == 1) {
 	                            return '<span class="layui-badge layui-bg-gray">按钮</span>';
 	                        }
 	                        if (d.parentId == -1) {
-	                            return '<span class="layui-badge layui-bg-blue">目录</span>';
+	                            return '<span class="layui-badge layui-bg-blue">公司</span>';
 	                        } else {
-	                            return '<span class="layui-badge-rim">菜单</span>';
+	                            return '<span class="layui-badge-rim">专业</span>';
 	                        }
-	                    }, title: '类型'
+	                    }, title: '类别'
 	                }
 	            ]],
 	            done: function () {

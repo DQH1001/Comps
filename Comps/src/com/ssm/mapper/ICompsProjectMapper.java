@@ -15,4 +15,5 @@ public interface ICompsProjectMapper {
 	public List<Users> SelectUsersInfoByCid(int cid);
 	public List<Comps> selectCompanyAll();
 	public int insertComps(Comps coms);
+	public List<Scores> selectCompsProList();
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -171,4 +174,21 @@ public class CompsController {
 			return null;
 		}		
 	}
+    @RequestMapping(value="/selectCPList")
+	@ResponseBody
+	public Map<String,Object> selectCompsProList(HttpServletRequest req) {
+    	List<Map<String,Object>> listMap=this.comModel.selectCompsProList();
+		Map<String,Object> map=new HashMap<String, Object>();			
+		map.put("code",0);
+		map.put("msg","ͶƱdetail");
+		map.put("count",listMap.size());
+		map.put("data",listMap);
+		return map;   	
+	}
+//    public static void main(String[] args) {
+//    	ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
+//    	CompsController sm=(CompsController)ac.getBean("compsController");
+//		System.out.println(sm.selectCompsProList().toString());
+//    	
+//	}
 }
