@@ -75,11 +75,19 @@ public class CompsController {
 		//获得物理路径webapp所在路径
 //		String pathRoot = request.getSession().getServletContext().getRealPath("");
 		String pathRoot=request.getRealPath("upload/comps/");
-		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
-		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
-		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
-		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
-
+		
+		//台式机路径
+//		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+//		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+//		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+//		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+		
+		//平板路径
+		String pathRootTxt="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+		String pathRootClogo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+		String pathRootLunbo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+		String pathRootVideo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+		
 		String path="";
 		List<String> listImagePath=new ArrayList<String>();
 		int j=0;
