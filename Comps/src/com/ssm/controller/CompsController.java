@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -92,25 +93,33 @@ public class CompsController {
 				String imageName=contentType.substring(contentType.indexOf("/")+1);
 				//file name jpeg - image/jpeg
 				System.out.println(mf.getOriginalFilename()+" name "+imageName+" - "+contentType);
+				//使用底下注上的方式能上传但是会导致文件损坏(文件上传ok，文件流不行)
 				//上传
-				mf.transferTo(new File(pathRoot+mf.getOriginalFilename()));
-
+				//mf.transferTo(new File(pathRoot+mf.getOriginalFilename()));
 				 // 使用getBytes()方法 上传companys项目的绝对路径上
-		        byte[] data=mf.getOriginalFilename().getBytes();		        
+		       // byte[] data=mf.getOriginalFilename().getBytes();		        
 		        //写出byte数组到文件
-		        File file3=null;
+		       // File file3=null;
 		        if(j==0) {
-		        	file3=new File(pathRootClogo+mf.getOriginalFilename());		        			        
+		        	//file3=new File(pathRootClogo+mf.getOriginalFilename());
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRoot+mf.getOriginalFilename()));
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRootClogo+mf.getOriginalFilename()));
 		        }else if(j==1) {
-		        	file3=new File(pathRootTxt+mf.getOriginalFilename());	
+		        	//file3=new File(pathRootTxt+mf.getOriginalFilename());	
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRoot+mf.getOriginalFilename()));
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRootTxt+mf.getOriginalFilename()));
 		        }else if(j==2) {
-		        	file3=new File(pathRootVideo+mf.getOriginalFilename());	
+		        	//file3=new File(pathRootVideo+mf.getOriginalFilename());	
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRoot+mf.getOriginalFilename()));
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRootVideo+mf.getOriginalFilename()));
 		        }else {
-		        	file3=new File(pathRootLunbo+mf.getOriginalFilename());	
+		        	//file3=new File(pathRootLunbo+mf.getOriginalFilename());	
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRoot+mf.getOriginalFilename()));
+		        	FileUtils.copyInputStreamToFile(mf.getInputStream(), new File(pathRootLunbo+mf.getOriginalFilename()));
 		        }
-		        FileOutputStream fosWithByte=new FileOutputStream(file3);
-		        fosWithByte.write(data,0,data.length);
-		        fosWithByte.close();
+//		        FileOutputStream fosWithByte=new FileOutputStream(file3);
+//		        fosWithByte.write(data,0,data.length);
+//		        fosWithByte.close();
 				j++;
 				listImagePath.add(mf.getOriginalFilename());
 			}
