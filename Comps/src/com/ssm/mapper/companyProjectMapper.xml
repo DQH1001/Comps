@@ -17,6 +17,9 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
       <result column="cusername" property="cusername" jdbcType="VARCHAR" javaType="string" />
       <result column="cdetail" property="cdetail" jdbcType="VARCHAR" javaType="string" />  
       <result column="numbers" property="numbers" jdbcType="INTEGER" javaType="Integer" /> 
+      <result column="usersnumbers" property="usersnumbers" jdbcType="INTEGER" javaType="Integer" />
+      <result column="huati" property="huati" jdbcType="INTEGER" javaType="Integer" /> 
+      <result column="liuyan" property="liuyan" jdbcType="INTEGER" javaType="Integer" /> 
       <result column="pros" property="pros" jdbcType="VARCHAR" javaType="string" />
       <result column="clogo" property="clogo" jdbcType="VARCHAR" javaType="string"/>
       <result column="cimgs" property="cimgs" jdbcType="VARCHAR" javaType="string"/>
@@ -46,6 +49,73 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
      <result column="cnum" property="cnum" jdbcType="INTEGER" javaType="Integer"/>   
      <result column="u_cid" property="u_cid" jdbcType="INTEGER" javaType="Integer"/>    
     </resultMap>
+    
+     <resultMap id="WordsResult" type="com.ssm.entity.Words">
+      <id column="wid" property="wid" jdbcType="INTEGER" javaType="Integer" />  
+       <result column="w_sid" property="w_sid" jdbcType="INTEGER" javaType="Integer" /> 
+       <result column="w_cid" property="w_cid" jdbcType="INTEGER" javaType="Integer" /> 
+       <result column="wcount" property="wcount" jdbcType="INTEGER" javaType="Integer" /> 
+       <result column="whid" property="whid" jdbcType="INTEGER" javaType="Integer" /> 
+     <result column="wtitle" property="wtitle" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="wcontent" property="wcontent" jdbcType="VARCHAR" javaType="string" />
+     <result column="wdate" property="wdate" jdbcType="VARCHAR" javaType="string"/>  
+     <result column="wimages" property="wimages" jdbcType="VARCHAR" javaType="string"/>  
+      <result column="wtest" property="wtest" jdbcType="VARCHAR" javaType="string"/>      
+      <result column="wauthor" property="wauthor" jdbcType="VARCHAR" javaType="string"/>  
+   <association property="stu" javaType="com.ssm.entity.Student"
+    	       resultMap="StudentResult"/>
+     <association property="comp" javaType="com.ssm.entity.Comps"
+    	       resultMap="CompanyResult"/>
+    </resultMap>
+    
+    <select id="selectStusCompsDetail" resultMap="ScoresResult" parameterType="com.ssm.entity.Comps">
+		SELECT s.*,t.sname,t.slogo,p.pname,c.clname , 
+		(SELECT COUNT(*) from words WHERE words.w_cid=#{cid} and words.w_sid=s.s_sid) 
+		as number from scores s,stus t,projects p,classes c WHERE s.s_sid=t.sid and p.pid=s.s_pid 
+		and c.clid=t.s_clid and s.s_cid=#{cid} 
+		<if test="score != null and score.stuname != null and score.stuname != ''">
+			<bind value="'%'+score.stuname+'%'" name="score.stuname"/>
+			and t.sname like #{score.stuname} 
+		</if>
+		<if test="s_pid != null and s_pid != 0 "> and s.s_pid = #{s_pid} </if>
+		<if test="score != null"> 
+			and (SELECT COUNT(*) from words WHERE words.w_cid=#{cid} and words.w_sid=s.s_sid)>=#{numbers}  
+		</if>
+			LIMIT #{currentPage},#{pageSize} 
+	</select>
+    
+    
+    <select id="selectCountStusComps" parameterType="com.ssm.entity.Comps" resultType="int">
+		SELECT count(*) from scores s,stus t,projects p,classes c WHERE s.s_sid=t.sid 
+		and p.pid=s.s_pid and c.clid=t.s_clid and s.s_cid=#{cid}  	
+		<if test="score != null and score.stuname != null and score.stuname != ''">
+		<bind value="'%'+score.stuname+'%'" name="score.stuname"/>
+			and t.sname like #{score.stuname}  
+		</if>
+		<if test="s_pid != null and s_pid != 0 "> 
+			and s.s_pid=#{s_pid}  
+		</if>
+		<if test="score != null"> 
+			and (SELECT COUNT(*) from words WHERE words.w_cid=#{cid} and words.w_sid=s.s_sid)>=#{numbers}  
+		</if>
+	</select>
+    
+    
+    <select id="selectCompWordsBycid" resultMap="WordsResult" parameterType="int">
+     	   SELECT w.*,s.*,c.* from words w,comps c,stus s WHERE w.w_cid=c.cid 
+				and w.w_sid=s.sid and w.whid=0 and w.w_cid=#{cid} order by w.wdate desc limit 5
+    </select>
+    
+    <!-- 查询公司被选人数，话题数，留言数，clogo，cname -->
+    <select id="selectCompanyCountsBycid" resultMap="CompanyResult" parameterType="int">
+    select c.clogo,c.cname,c.cvideo,c.cimgs,c.ctvchoose,
+(select count(*) from scores s where s.s_cid=c.cid) as numbers ,
+(select count(*) from users u where u.u_cid=c.cid) as usersnumbers ,
+(select count(*) from words w where w.whid=0 and w_cid=c.cid) as huati ,
+(select count(*) from words w where w.whid!=0 and w_cid=c.cid) as liuyan 
+from comps c where c.cid=#{cid}
+    </select>
+    
     <select id="SelectUsersInfoByCid" resultMap="UsersResult" parameterType="int">
     SELECT u.*,(SELECT count(scid) from scores where FIND_IN_SET(s_pid,u.u_pros) and s_cid=#{1}) as pnum,
 (SELECT count(scid) from scores where s_cid=#{1}) as cnum

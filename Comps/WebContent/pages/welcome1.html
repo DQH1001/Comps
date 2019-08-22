@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>网站后台管理模版</title>
+		<link rel="stylesheet" type="text/css" href="../static/admin/layui/css/layui.css"/>
+		<link rel="stylesheet" type="text/css" href="../static/admin/css/admin.css"/>
+		 <link rel="stylesheet" type="text/css" href="../js/swiper.min.css" />
+		
+		<style type="text/css">
+        .imgs{
+       		object-fit:fill;
+        	width:100%;
+        	height: 350px;
+        }
+        video{
+           object-fit:fill;
+           width: 100%;
+           height: 350px;
+        }
+    </style>
+	</head>
+	<body>
+		<div class="wrap-container welcome-container" id="app">
+			<div class="row">
+				<div class="welcome-left-container col-lg-9">
+					<div style="margin-left: 42%; margin-bottom: 10px;">
+						<!-- 以猫的路径参照 -->
+						<img width="40px" height="35px" :src="clogo" />
+						&nbsp;&nbsp;
+						<span style="font-size: 22px;">{{cname}}</span>
+					</div>
+					<div class="data-show">
+						<ul class="clearfix">
+							<li class="col-sm-12 col-md-3 col-xs-12">
+								<a href="javascript:;" class="clearfix">
+									<div class="icon-bg bg-org f-l">
+										<span class="iconfont">&#xe606;</span>
+									</div>
+									<div class="right-text-con">
+										<p class="name">被选人数</p>
+										<p><span class="color-org">{{numbers}}</span>数据<span class="iconfont">&#xe628;</span></p>
+									</div>
+								</a>
+							</li>
+							<li class="col-sm-12 col-md-3 col-xs-12">
+								<a href="javascript:;" class="clearfix">
+									<div class="icon-bg bg-blue f-l">
+										<span class="iconfont">&#xe602;</span>
+									</div>
+									<div class="right-text-con">
+										<p class="name">话题数</p>
+										<p><span class="color-blue">{{huati}}</span>数据<span class="iconfont">&#xe628;</span></p>
+									</div>
+								</a>
+							</li>
+							<li class="col-sm-12 col-md-3 col-xs-12">
+								<a href="javascript:;" class="clearfix">
+									<div class="icon-bg bg-green f-l">
+										<span class="iconfont">&#xe605;</span>
+									</div>
+									<div class="right-text-con">
+										<p class="name">评论数</p>
+										<p><span class="color-green">{{liuyan}}</span>数据<span class="iconfont">&#xe60f;</span></p>
+									</div>
+								</a>
+							</li>
+							<li class="col-sm-12 col-md-3 col-xs-12">
+								<a href="javascript:;" class="clearfix">
+									<div class="icon-bg bg-green f-l">
+										<span class="iconfont">&#xe601;</span>
+									</div>
+									<div class="right-text-con">
+										<p class="name">员工数</p>
+										<p><span class="color-green">{{usersnumbers}}</span>数据<span class="iconfont">&#xe60f;</span></p>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!--视频-->
+					<div class="chart-panel panel panel-default" v-if="seen">
+						 <video :src="cvideo" controls="controls" ishivideo="true" autoplay="true" isrotate="false" autoHide="true">
+							 您的浏览器不支持视频video播放
+						 </video>
+					</div>
+					<!--轮播图-->
+					<div class="chart-panel panel panel-default" v-else>
+						<div class="swiper-container">
+						    <div class="swiper-wrapper">
+						       <div class="swiper-slide" v-for="item in cimgs">
+						       		<img class="imgs" :src="item.img"/>
+						       </div>
+						    </div>
+						    <!-- 如果需要分页器 -->
+						    <div class="swiper-pagination"></div>
+						
+						    <!-- 如果需要导航按钮 -->
+						    <div class="swiper-button-prev"></div>
+						    <div class="swiper-button-next"></div>
+						
+						    <!-- 如果需要滚动条 -->
+						    <!-- <div class="swiper-scrollbar"></div> -->
+						</div>
+					</div>
+					<!--服务器信息-->
+					<div class="server-panel panel panel-default">
+						<div class="panel-header">服务器信息</div>
+						<div class="panel-body clearfix">
+							<div class="col-md-2">
+								<p class="title">服务器环境</p>
+								<span class="info">Apache/2.4.4 (Win32) PHP/5.4.16</span>
+							</div>
+							<div class="col-md-2">
+								<p class="title">服务器IP地址</p>
+								<span class="info">127.0.0.1   </span>
+							</div>
+							<div class="col-md-2">
+								<p class="title">服务器域名</p>
+								<span class="info">localhost </span>
+							</div>
+							<div class="col-md-2">
+								<p class="title"> PHP版本</p>
+								<span class="info">5.4.16</span>
+							</div>
+							<div class="col-md-2">
+								<p class="title">数据库信息</p>
+								<span class="info">5.6.12-log </span>
+							</div>
+							<div class="col-md-2">
+								<p class="title">服务器当前时间</p>
+								<span class="info">2016-06-22 11:37:35</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="welcome-edge col-lg-3">
+					<!--最新留言-->
+					<div class="panel panel-default comment-panel">
+						<div class="panel-header">最新话题</div>
+						<div class="panel-body">
+							<div class="commentbox">
+								<ul class="commentList" v-for="item in lsWords">
+								  <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" :src="item.slogo"></i></a>
+								    <div class="comment-main">
+								      <header class="comment-header">
+								        <div class="comment-meta"><a class="comment-author" href="#">{{item.sname}}</a> 发布于
+								          <time>{{item.wdate}}</time>&nbsp;&nbsp;&nbsp;&nbsp;<time>回复数量：{{item.wcount}}</time>
+								        </div>
+								      </header>
+								      <div class="comment-body">
+								        <p><a href="#">话题：{{item.wtitle}}</a> 内容：{{item.wcontent}}</p>
+								      </div>
+								    </div>
+								  </li>
+								 
+								</ul>
+							</div>
+							<div id="pagesbox" style="text-align: center;padding-top: 5px;">
+								
+							</div>
+						</div>
+					</div>
+					<!--联系-->
+					<div class="panel panel-default contact-panel">
+						<div class="panel-header">联系我们</div>
+						<div class="panel-body">
+							<p>QQ：1465465646</p>
+							<p>E-mail:4565564@qq.com</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../js/jquery-1.10.2.min.js"></script>
+		<script src="../static/js/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	<script type="text/javascript" src="../js/vue-resource.min.js"></script>
+	<script type="text/javascript" src="../js/swiper-3.4.1.jquery.min.js"></script>
+		<script type="text/javascript">
+		var app=new Vue({
+			el:"#app",
+			data:{
+				clogo:'',
+				cname:'',
+				numbers:'',
+				huati:'',
+				liuyan:'',
+				usersnumbers:'',
+				cvideo:'',
+				cimgs:'',
+				ctvchoose:'',
+				seen:'',
+				lsWords:''
+			}, 
+			mounted(){
+				this.getIndex();
+				this.getCompsWords();
+			},
+			methods:{
+				getIndex(){
+					this.$http.post('../coms/selectCounts.action',{cid:1},
+							{emulateJSON:true}).then(function(res){
+								this.clogo="../../WeAdmin/images/clogo/"+res.body.clogo;
+								this.cname=res.body.cname;
+								this.numbers=res.body.numbers;
+								this.huati=res.body.huati;
+								this.liuyan=res.body.liuyan;
+								this.usersnumbers=res.body.usersnumbers;
+								this.ctvchoose=res.body.ctvchoose;
+								//1:视频，2：轮播图
+								if(this.ctvchoose==1){
+									this.cvideo="../../WeAdmin/video/"+res.body.cvideo;
+									this.seen=true;
+								}else{
+									this.cimgs=res.body.cimgs;
+									this.seen=false;
+									this.$nextTick(function(){
+										   if(!!this.cimgs.length){
+										   this.swiperInit();
+										   }
+										  });
+								}
+								
+							},function(res){
+								alert("error")
+							});
+				},
+				getCompsWords(){
+					this.$http.post('../coms/selectCompWords.action',{cid:1},
+							{emulateJSON:true}).then(function(res){
+								this.lsWords=res.body;							
+							},function(res){
+								alert("error")
+							});
+				},
+				swiperInit() {
+					var mySwiper = new Swiper ('.swiper-container', {
+					     // 滚动方向 horizontal/vertical
+					    direction: 'horizontal',
+					    // 自动播放
+					    autoplay:2000,
+					    // 是否循环播放
+					    loop: true,
+					    // 如果需要分页器（小圆点）
+					    // 是否需要分页器
+					    pagination: '.swiper-pagination',
+					    // 点击分页器是否切换到对应的图片 是 true 否 false
+					    paginationClickable:true,
+
+					    // 如果需要前进后退按钮
+					    nextButton: '.swiper-button-next',
+					    prevButton: '.swiper-button-prev',
+
+					     // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+					    // 如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay。
+					    // 操作包括触碰，拖动，点击pagination等。
+					    autoplayDisableOnInteraction:false,
+					  }) 
+					}
+			
+			}
+		})
+		</script>
+	</body>
+</html>

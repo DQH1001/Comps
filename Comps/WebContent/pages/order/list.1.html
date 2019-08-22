@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>订单列表-WeAdmin Frame型后台管理系统-WeAdmin 1.0</title>
@@ -10,14 +9,8 @@
 		<link rel="stylesheet" href="../../static/css/font.css">
 		<link rel="stylesheet" href="../../static/css/weadmin.css">
 		<script src="../../js/jquery-1.10.2.min.js" type="text/text/javascript"></script>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>
-		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-		<!--[if lt IE 9]>
-	      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-	      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-	    <![endif]-->
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>		
 	</head>
-
 	<body>
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
@@ -28,200 +21,172 @@
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
 		</div>
-		<div class="weadmin-body">
-			<div class="layui-row" id="form2">
-				<form class="layui-form layui-col-md12 we-search">
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="开始日" name="start" id="start">
-					</div>
-					<div class="layui-inline">
-						<input class="layui-input" placeholder="截止日" name="end" id="end">
-					</div>
-					<div class="layui-input-inline">
-						<select name="contrller">
-							<option>支付状态</option>
-							<option>已支付</option>
-							<option>未支付</option>
+
+	<div class="weadmin-body" style="background-color: white;" id="form4" >
+	<!-- lay-filter="test1" 
+		<form class="layui-form" style="height: 20px;"
+          > 	
+    -->   	
+       	<div class="layui-form layui-input-inline" >
+						<select name="contrller"  id="project2">							
 						</select>
 					</div>
-					<div class="layui-input-inline">
-						<select name="contrller">
-							<option>支付方式</option>
-							<option>支付宝</option>
-							<option>微信</option>
-							<option>货到付款</option>
-						</select>
+		<div class="layui-inline">
+						<input type="text" id="uname" name="usern" placeholder="学生名字" autocomplete="off" class="layui-input">
 					</div>
-					<div class="layui-input-inline">
-						<select name="contrller">
-							<option value="">订单状态</option>
-							<option value="0">待确认</option>
-							<option value="1">已确认</option>
-							<option value="2">已收货</option>
-							<option value="3">已取消</option>
-							<option value="4">已完成</option>
-							<option value="5">已作废</option>
-						</select>
-					</div>
-					<div class="layui-inline">
-						<input type="text" id="ordernumber" name="username" placeholder="请输入订单号" autocomplete="off" class="layui-input">
-					</div>
-					<button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-				</form>
-			</div>
-			<script id="form3" type="text/html">
-   <div class="weadmin-block" >
-   
-   	<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-   	<button class="layui-btn" onclick="WeAdminShow('添加订单','./add.html')"><i class="layui-icon"></i>添加</button>	
-	 <button class="layui-btn layui-btn-warm" id="refresh" data-type="reload">
-            <i class="layui-icon layui-icon-refresh"></i>
-            刷新
-        </button>
-   	<span class="fr" style="line-height:40px">共有数据：88 条</span>
-   </div>
-</script>
-			
+		<div class="layui-inline">
+					 	<input type="text" id="ordernumber" name="username" placeholder="留言数量>0" autocomplete="off" class="layui-input">
+					</div>			
+		<button class="layui-btn" id="btn1" lay-filter="sreach" data-type="reload">
+						<i class="layui-icon">&#xe615;</i></button>	   			
+		<!-- 			
+       </form> -->
+	 
+  <script id="form3" type="text/html"> 
+  
+	 <button class="layui-btn layui-btn-warm" id="refresh" >
+            <i class="layui-icon layui-icon-refresh"></i>刷新</button> 		   
+  
+ </script>				
 			<table id="layuitable1" class="layui-table">
 				</table>
-			
-			
 		</div>
 		<script>			
-			layui.extend({
-				admin: '{/}../../static/js/admin'
+		layui.extend({
+			admin: '{/}../../static/js/admin'
+		});
+		//当前layui操作需要哪些插件工具，use加载哪些
+		layui.use(['laydate','form','jquery','admin','table'], function() {
+			var laydate = layui.laydate,
+			$ = layui.jquery,
+			admin = layui.admin,
+			form = layui.form,
+			table=layui.table;
+			//执行一个laydate实例   点击文本框弹出日历效果
+			laydate.render({
+				elem: '#start' //指定元素
 			});
-			
-			layui.use(['laydate','jquery','admin','table'], function() {
-				var laydate = layui.laydate,
-					$ = layui.jquery,
-					admin = layui.admin;
-				//执行一个laydate实例
-				laydate.render({
-					elem: '#start' //指定元素
-				});
-				//执行一个laydate实例
-				laydate.render({
-					elem: '#end' //指定元素
-				});
-				var tab=layui.table.render({
-									elem:"#layuitable1",
-									url:"../../json/user.json",
-									toolbar:'#form3',
-									title:"用户信息列表",									
-									page:true,
-									id:"listReload",
-									limit:5,
-									limits:[5,10,20,100],									
-									loading:true,
-									cols:[[
-										{
-											field:"id",
-											type:"checkbox",
-											title:"ID",
-											align:"center"
-										},{
-											field:"uname",
-											title:"用户名",
-											align:"center"
-										},{
-											field:"role",
-											title:"角色",
-											align:"center"
-										},{
-											field:"registerTime",
-											title:"注册时间",
-											align:"center"
-										},{
-											field:"lastLoginTime",
-											title:"最后登录时间",
-											align:"center"
-										},{
-											field:"id",
-											title:"操作",
-											align:"center",
-											templet:function (row) {
-												var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
-												var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> ";
-												return del+ update;
-											}
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#end' //指定元素
+			});
+			selectOpt();
+			function selectOpt(){			  
+				  $.ajax({
+						url:"../../coms/prolist.action",
+						method:"post",
+						dataType:"json",	
+						data:{"pros":"1,2,4"},//1,2,4 login的缓存中get
+						async:false,
+						success:function(data){	
+							var t="<option value='0' >请选择----专业名称</option>";
+							$.each(data,function(i){
+								//alert(data[i].pid+" > "+data[i].pname);
+				t+="<option value='"+data[i].pid+"' >"+data[i].pname+"</option>";
+							})
+							//alert(t);
+					       $("#project2").html(t);
+						},
+					    error:function(){
+					    	alert("eerr");
+					    }
+				  });			  
+			 }	
+			form.render();
+		    //form.render('select' ,'test1'); //刷新select选择框渲染
+			var tab=layui.table.render({
+								elem:"#layuitable1",
+								url:"../../coms/stusList.action",
+								contentType: "application/json",
+								toolbar:'#form3',
+								title:"学生信息列表",									
+								page:true,
+								method: 'POST', //方式
+								id:"listReload",//创建当前ajax layui table的唯一值
+								limit:3,
+								limits:[2,3,5],									
+								loading:true,
+								cols:[[
+									{
+										field:"id",
+										type:"checkbox",
+										title:"ID",
+										align:"center"
+									},{	
+										field:"slogo",
+										title:"Image",
+										align:"center",										
+										templet:function (row) {
+			var d ="<img src='../../../WeAdmin/upload/"+row.slogo+"' title='"+row.sid+
+								        	"' width='38' height='30' />";
+											return d;
 										}
-									]]
-				});
-				//layui.tab;
-				$("#refresh").click(function(){
-					alert("ast");
-					tab.reload();
-				});
-				var $ = layui.$, active = {
-					reload: function(){
-					  var demoReload = $('#ordernumber');		
-								//	 alert("aab");
-					  //执行重载
-					  table.reload('listReload', {
-						page: {
-						  curr: 1 //重新从第 1 页开始
-						}
-						,where: {
-						  key: {
-							id: demoReload.val()
-						  }
-						}
-					  });
-					}
-				  };
-				
-				/*用户-停用*/
-				function member_stop(obj, id) {
-					layer.confirm('确认要停用吗？', function(index) {
-						if($(obj).attr('title') == '启用') {
-							//发异步把用户状态进行更改
-							$(obj).attr('title', '停用')
-							$(obj).find('i').html('&#xe62f;');
-	
-							$(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-							layer.msg('已停用!', {
-								icon: 5,
-								time: 1000
-							});
-	
-						} else {
-							$(obj).attr('title', '启用')
-							$(obj).find('i').html('&#xe601;');
-	
-							$(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-							layer.msg('已启用!', {
-								icon: 5,
-								time: 1000
-							});
-						}
-					});
-				}
-	
-				/*用户-删除*/
-				function member_del(obj, id) {
-					layer.confirm('确认要删除吗？', function(index) {
-						//发异步删除数据
-						$(obj).parents("tr").remove();
-						layer.msg('已删除!', {
-							icon: 1,
-							time: 1000
-						});
-					});
-				}
-	
-				function delAll(argument) {
-					var data = tableCheck.getData();
-					layer.confirm('确认要删除吗？' + data, function(index) {
-						//捉到所有被选中的，发异步进行删除
-						layer.msg('删除成功', {
-							icon: 1
-						});
-						$(".layui-form-checked").not('.header').parents('tr').remove();
-					});
-				}
+									},{
+										field:"sname",
+										title:"用户名",
+										align:"center"
+									},{
+										field:"sid",
+										title:"学号",
+										align:"center"
+									},{
+										field:"clname",
+										title:"班级",
+										align:"center"
+									},{
+										field:"pname",
+										title:"专业名称",
+										align:"center"
+									},{
+										field:"number",
+										title:"留言数量",
+										align:"center"
+									},{
+										field:"id",
+										title:"操作",
+										align:"center",
+										templet:function (row) {
+											var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
+											var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> ";
+											return del+ update;
+										}
+									}
+								]]
 			});
+			//layui.tab;刷新button
+			$("#refresh").click(function(){
+				alert("ast");
+				tab.reload();
+			});			
+			//jQuery绑定layui table搜索监听的type(active属性)和当前单击搜索button的type绑定
+			//$('.weadmin-block .layui-btn').on('click', function () {
+			$('#form4 #btn1').on('click', function () {
+	            var type = $(this).data('type');
+	            active[type] ? active[type].call(this) : '';
+	        });
+	        //绑定之后，单击搜索按钮才有效果，
+			var $ = layui.$, active = {					
+				reload: function(){						
+				  //var demoReload = $('#ordernumber');
+				  alert($("#project2").val()+" / "+
+						  $("#ordernumber").val()+" / "+$("#uname").val())
+				  
+				  //执行重载
+				  table.reload('listReload', {
+					  url:"../../coms/stusList.action",
+					  page: {
+					  curr: 1 //重新从第 1 页开始
+					}
+					,where: {	
+						's_pid':$("#project2").val(),
+						'number':$("#ordernumber").val(),
+						'stuname':$("#uname").val()
+					}
+				  });
+				}
+			  };
 			
+		});
 		</script>
 	</body>
 

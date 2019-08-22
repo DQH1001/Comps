@@ -2,15 +2,18 @@ package com.ssm.model;
 
 import java.util.*;
 
+import org.aspectj.weaver.ArrayAnnotationValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.entity.*;
 import com.ssm.mapper.ICompsProjectMapper;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 
 @Transactional
 @Component("compsModel")
@@ -133,6 +136,77 @@ public class CompanyModel {
 		}
 		return list;
 	}
+	//查询公司被选人数，话题数，留言数，员工数，轮播图，视频，clogo，cname
+	public Map<String,Object> selectCompanyCountsBycid(int cid){
+		Comps comps=this.cm.selectCompanyCountsBycid(cid);
+		Map<String,Object> map=null;
+		map=new HashMap<String, Object>();
+		map.put("cname",comps.getCname());
+		map.put("clogo", comps.getClogo());
+		map.put("cvideo",comps.getCvideo());
+		List<Map<String,Object>> l=new ArrayList<Map<String,Object>>();
+		Map<String,Object> m=null;
+		String[] s=comps.getCimgs().split(",");
+		for (String string : s) {
+			m=new HashMap<String, Object>();
+			m.put("img", "../../WeAdmin/images/imglunbo/"+string);
+			l.add(m);
+		}
+		map.put("cimgs", l);
+		map.put("ctvchoose", comps.getCtvchoose());
+		map.put("numbers", comps.getNumbers());
+		map.put("usersnumbers", comps.getUsersnumbers());
+		map.put("huati", comps.getHuati());
+		map.put("liuyan", comps.getLiuyan());
+		return map;
+	}
+	//根据cid查询公司所有话题
+  	public List<Map<String,Object>> selectCompWordsBycid(int cid){
+  		List<Words> words=new ArrayList();
+  		words=cm.selectCompWordsBycid(cid);
+  		List<Map<String,Object>> listMap=new ArrayList<Map<String,Object>>();
+  		Map<String,Object> map=null;
+  		for(Words word:words) {
+  			map=new HashMap<String, Object>();
+  			map.put("wid", word.getWid());
+  			map.put("wtitle", word.getWtitle());
+  			map.put("wcontent", word.getWcontent());
+  			map.put("wdate", word.getWdate());
+  			map.put("w_cid", word.getW_cid());
+  			map.put("w_sid", word.getW_sid());
+  			map.put("wimages", word.getWimages());
+  			map.put("wauthor", word.getWauthor());
+  			map.put("wcount", word.getWcount());
+  			map.put("whid", word.getWhid());
+  			map.put("slogo", "../../WeAdmin/upload/"+word.getStu().getSlogo());
+  			//map.put("clogo", "images/clogo/"+word.getComp().getClogo());
+  			map.put("sname", word.getStu().getSname());
+  			listMap.add(map);
+  		}
+  		return listMap;
+  	}
+	//查询学生
+  	@Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+	public Map<String,Object> StusCompyList(Comps ocm){
+		List<Map<String, Object>> lists=new ArrayList<Map<String,Object>>();
+		List<Scores> lc=this.cm.selectStusCompsDetail(ocm);
+		Map<String, Object> mp=null;
+		for (Scores scors : lc) {
+			mp=new HashMap<String, Object>();
+			//put的根目录的json数据，特点：				
+			mp.put("sid",scors.getS_sid());
+			mp.put("slogo", scors.getStus().getSlogo());
+			mp.put("sname", scors.getStus().getSname());
+			mp.put("clname", scors.getStus().getClasses().getClname());
+			mp.put("pname", scors.getProject().getPname());
+			mp.put("number", scors.getNumber());
+			lists.add(mp);
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("data",lists);
+		map.put("count",cm.selectCountStusComps(ocm));
+		return map;
+	}
 	//专业插入(院长功能,待完善)
 	public boolean SaveProject(Projects pro) {
 		// TODO Auto-generated method stub
@@ -141,6 +215,6 @@ public class CompanyModel {
 	public static void main(String[] args) {
 		ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
 		CompanyModel sm=(CompanyModel)ac.getBean("compsModel");
-		System.out.println(sm.selectCompsProList().toString());
+		System.out.println(sm.selectCompanyCountsBycid(1).toString());
 	}
 }

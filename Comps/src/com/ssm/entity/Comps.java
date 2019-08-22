@@ -3,7 +3,33 @@ package com.ssm.entity;
 import java.util.List;
 
 public class Comps {
-	private int cid=0,c_tid,numbers=-1,ctvchoose,ccheck;
+	private int cid=0,c_tid,numbers=-1,ctvchoose,ccheck,huati,liuyan,usersnumbers,s_pid;
+	 private int currentPage=0,pageSize=5;
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	private Scores score;
+	public int getUsersnumbers() {
+		return usersnumbers;
+	}
+
+	public void setUsersnumbers(int usersnumbers) {
+		this.usersnumbers = usersnumbers;
+	}
+
 	private String cname,cdate,c_pros,cdetail,pros,clogo,cimgs,ctext,cvideo,cusername;
 //	private List<Projects> listPro=null;
 	public Comps() {}
@@ -33,6 +59,38 @@ public class Comps {
 	
 	public int getNumbers() {
 		return numbers;
+	}
+
+	public int getS_pid() {
+		return s_pid;
+	}
+
+	public void setS_pid(int s_pid) {
+		this.s_pid = s_pid;
+	}
+
+	public Scores getScore() {
+		return score;
+	}
+
+	public void setScore(Scores score) {
+		this.score = score;
+	}
+
+	public int getHuati() {
+		return huati;
+	}
+
+	public void setHuati(int huati) {
+		this.huati = huati;
+	}
+
+	public int getLiuyan() {
+		return liuyan;
+	}
+
+	public void setLiuyan(int liuyan) {
+		this.liuyan = liuyan;
 	}
 
 	public String getCusername() {

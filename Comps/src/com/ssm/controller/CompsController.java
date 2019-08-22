@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,16 +81,16 @@ public class CompsController {
 		String pathRoot=request.getRealPath("upload/comps/");
 		
 		//台式机路径
-//		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
-//		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
-//		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
-//		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
 		
 		//平板路径
-		String pathRootTxt="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
-		String pathRootClogo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
-		String pathRootLunbo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
-		String pathRootVideo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+//		String pathRootTxt="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+//		String pathRootClogo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+//		String pathRootLunbo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+//		String pathRootVideo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
 		
 		String path="";
 		List<String> listImagePath=new ArrayList<String>();
@@ -174,6 +175,14 @@ public class CompsController {
 			return null;
 		}		
 	}
+    @RequestMapping(value="/selectCounts")
+	@ResponseBody
+	public Map<String,Object> selectCompanyCountsBycid(HttpServletRequest req,int cid) {
+    	
+		Map<String,Object> map=new HashMap<String, Object>();			
+		map=this.comModel.selectCompanyCountsBycid(cid);
+		return map;   	
+	}
     @RequestMapping(value="/selectCPList")
 	@ResponseBody
 	public Map<String,Object> selectCompsProList(HttpServletRequest req) {
@@ -185,10 +194,54 @@ public class CompsController {
 		map.put("data",listMap);
 		return map;   	
 	}
+    //查询公司留言
+    @RequestMapping(value="/selectCompWords")
+	@ResponseBody
+	public List<Map<String,Object>> selectCompWordsBycid(HttpServletRequest req,int cid) {
+    	List<Map<String,Object>> listMap=this.comModel.selectCompWordsBycid(cid);
+		return listMap;   	
+	}
+    //查询学生列表
+    @RequestMapping(value="/stusList")
+	@ResponseBody
+	public Map<String,Object> StusCompyList(HttpServletRequest req,
+			@RequestBody Scores sco) {
+		try {
+			req.setCharacterEncoding("utf-8");
+			System.out.println("page:"+sco.getPage()+",limit:"+sco.getLimit());
+			Comps comps=new Comps();
+			comps.setCid(1);
+			
+			//1   3：   sql limit 0,3    2 3    limit 3 ，3
+			comps.setCurrentPage((sco.getPage()-1)*sco.getLimit());//1 2 当前页 替换为limit的第一个数值
+			comps.setPageSize(sco.getLimit());
+			if(sco!=null) {
+				System.out.println(sco.getNumber()+"-"+
+			    sco.getS_pid()+"-"+sco.getStuname());
+				//0-0-null
+				   comps.setS_pid(sco.getS_pid());
+				   comps.setNumbers(sco.getNumber());
+//				   sc.setNumbers(0);
+//				   sc.setS_pid(2);
+//				   sc.setStuname("e");
+//				   comps.setScore(sc);
+				comps.setScore(sco);
+			}			
+			Map<String,Object> map=this.comModel.StusCompyList(comps);	
+			System.out.println(((List)map.get("data")).size()+" zis"  );
+			map.put("code",0);
+			map.put("msg","students detail");
+			System.out.println("----------");
+			return map;			
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
 //    public static void main(String[] args) {
 //    	ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
 //    	CompsController sm=(CompsController)ac.getBean("compsController");
-//		System.out.println(sm.selectCompsProList().toString());
+//		System.out.println(sm.selectCompWordsBycid(1).toString());
 //    	
 //	}
 }

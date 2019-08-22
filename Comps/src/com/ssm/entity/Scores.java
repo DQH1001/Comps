@@ -1,7 +1,8 @@
 package com.ssm.entity;
 
 public class Scores {
-	private int scid,s_pid,s_cid,s_sid,number;
+	private int scid,s_pid,s_cid,s_sid,number,page,limit;
+	private String stuname;
 	private Comps comps;
 	private Projects project;
 	private Student stus;
@@ -14,6 +15,24 @@ public class Scores {
 		this.s_sid = s_sid;
 	}
 	
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getLimit() {
+		return limit;
+	}
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	public String getStuname() {
+		return stuname;
+	}
+	public void setStuname(String stuname) {
+		this.stuname = stuname;
+	}
 	public Projects getProject() {
 		return project;
 	}
