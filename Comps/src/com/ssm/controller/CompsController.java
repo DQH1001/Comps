@@ -55,10 +55,10 @@ public class CompsController {
 	}
     @RequestMapping(value="/prolist")
 	@ResponseBody
-	public List<Map<String,Object>> ProjList(HttpServletRequest req) {
+	public List<Map<String,Object>> ProjList(HttpServletRequest req,String pros) {
 		try {
 			req.setCharacterEncoding("utf-8");			
-			List<Map<String,Object>> ma=this.comModel.SearchProjectList();
+			List<Map<String,Object>> ma=this.comModel.SearchProjectList(pros);
 			System.out.println("ssi:"+ma.size());			
 			return ma;
 		} catch (UnsupportedEncodingException e) {

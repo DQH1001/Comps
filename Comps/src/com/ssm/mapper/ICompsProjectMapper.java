@@ -3,13 +3,14 @@ package com.ssm.mapper;
 
 import java.util.*;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import com.ssm.entity.*;
 
 @Component("compsProject")
 public interface ICompsProjectMapper {
-	public List<Projects> SelectProjectList();
+	public List<Projects> SelectProjectList(@Param("pros")String pros);
 	public List<Comps> selectCompanyProjectByObject(Comps com);	
 	public List<Projects> SelectProjectListByComps(Comps com);
 	public Comps selectCompanyBycid(int cid);

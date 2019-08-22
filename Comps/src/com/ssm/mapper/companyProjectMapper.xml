@@ -149,9 +149,13 @@ from users u WHERE u.u_cid=#{1} Order By rand() Limit 5
     SELECT p.*,(SELECT count(*) from scores WHERE s_pid=p.pid and s_cid=#{cid}) as numbers
 from projects p where FIND_IN_SET(p.pid,#{c_pros}) ;
     </select>
-    <select id="SelectProjectList" resultMap="ProjectsResult">
-    SELECT * from projects order by pid desc ;
-    </select>
+    <select id="SelectProjectList" parameterType="java.lang.String" resultMap="ProjectsResult">
+		SELECT * from projects 
+		<if test="pros != null and pros != ''">
+			where FIND_IN_SET(pid,#{pros}) 
+		</if>
+			order by pid desc ; 
+	</select>
     <select id="selectCompanyAll" resultMap="CompanyResult" >
     select * from comps ORDER BY rand() LIMIT 5;  
     </select>  

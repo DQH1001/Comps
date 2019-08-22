@@ -42,9 +42,9 @@ public class CompanyModel {
     	return list;
     } 
 	//公司注册中用于遍历专业复选框
-	public List<Map<String,Object>> SearchProjectList() {
+	public List<Map<String,Object>> SearchProjectList(String pros) {
     	List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
-    	List<Projects> lsp=cm.SelectProjectList();
+    	List<Projects> lsp=cm.SelectProjectList(pros);
     	Map<String,Object> map=null;
     	for (Projects comps2 : lsp) {
     		map=new HashMap<String, Object>();
@@ -62,7 +62,7 @@ public class CompanyModel {
     	Map<String ,List> map=new HashMap<String, List>();
     	List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
     	List<Comps> lc=this.cm.selectCompanyAll();
-    	List<Projects> lp=this.cm.SelectProjectList();
+    	List<Projects> lp=this.cm.SelectProjectList(null);
     	Map<String, Object> mp=null;
     	for (Projects projects : lp) {
 			mp=new HashMap<String, Object>();
