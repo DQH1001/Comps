@@ -23,12 +23,12 @@
 		</div>
 
 	<div class="weadmin-body" style="background-color: white;" id="form4" >
-	<!-- lay-filter="test1" 
+	<!--
 		<form class="layui-form" style="height: 20px;"
           > 	
     -->   	
-       	<div class="layui-form layui-input-inline layui-form">
-						<select name="contrller"  id="project2" lay-search>							
+       	<div class="layui-form layui-input-inline"  lay-filter="test1" >
+						<select name="contrller"  id="project2" lay-search  lay-verify="required" lay-filter="search_type">							
 						</select>
 					</div>
 		<div class="layui-inline">
@@ -41,14 +41,34 @@
 						<i class="layui-icon">&#xe615;</i></button>	   			
 		<!-- 			
        </form> -->
-	 
+	 	<!--模态框-->
+<div id="motaikunag" style="display: none; margin: 25px">
+    <div class="layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-form-label">
+                <label>学生name:</label>
+            </div>
+            <div class="layui-input-block">
+                <input type="text" name="testname" id="testname" class="layui-input" placeholder="获取的文本框中的值">
+            </div>
+        </div>
+		<div class="layui-form-item">
+		    <div class="layui-form-label">
+		        <label>留言数量:</label>
+		    </div>
+		    <div class="layui-input-block">
+		        <input type="text" name="citys" id="citys" class="layui-input" placeholder="获取的文本框中的值">
+		    </div>
+		</div>
+    </div>
+</div>
   <script id="form3" type="text/html"> 
   
 	 <button class="layui-btn layui-btn-warm" id="refresh" >
             <i class="layui-icon layui-icon-refresh"></i>刷新</button> 		   
   
  </script>				
-			<table id="layuitable1" class="layui-table">
+			<table id="layuitable1" class="layui-table" lay-filter="demo2">
 				</table>
 		</div>
 		<script>			
@@ -92,8 +112,8 @@
 					    }
 				  });			  
 			 }	
-			form.render();
-		    //form.render('select' ,'test1'); //刷新select选择框渲染
+			//form.render();
+		    form.render('select' ,'test1'); //刷新select选择框渲染
 			var tab=layui.table.render({
 								elem:"#layuitable1",
 								url:"../../coms/stusList.action",
@@ -146,9 +166,10 @@
 										title:"操作",
 										align:"center",
 										templet:function (row) {
-											var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
-											var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> ";
-											return del+ update;
+											/* var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
+											var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> "; */
+											var del=' <a class="layui-btn layui-btn-mini" lay-event="edit">留言</a>';
+											return del;
 										}
 									}
 								]]
@@ -164,6 +185,58 @@
 	            var type = $(this).data('type');
 	            active[type] ? active[type].call(this) : '';
 	        });
+			form.on('select(search_type)', function(data){
+			    //alert(78990);
+				//alert($("#project2").val()+" val");
+				table.reload('listReload', {
+					  //url:"../../coms/stusList.action",
+					  page: {
+					  curr: 1 //重新从第 1 页开始
+					}
+					,where: {	
+						's_pid':$("#project2").val(),
+						'numbers':$("#ordernumber").val(),
+						'stuname':$("#uname").val()
+					}
+				  });
+			});
+			//监听工具条
+			table.on('tool(demo2)', function(obj){
+				var data = obj.data;
+				if(obj.event === 'edit'){
+                   layui.use(["layer"], function () {
+                       var layer = layui.layer;
+                       layer.open({
+                           type: "1",
+                           area: ['450px', '400px'],
+                           title: "模态框",
+                           btn: ["去给他留言...", '取消'],
+                           content: $("#motaikunag"),
+                           yes: function (index, layero) {
+                               //  layer.msg($("#testname").val());
+                               layer.alert("提示信息：" + $("#testname").val(), {
+                                   icon: 1,
+                                   closeBtn: 0,
+                                   btn: ["确定", '取消']
+                               }, function (index) {
+                                   layer.closeAll();
+                               });
+                           },
+                           btn2: function (index, layero) {
+                               //layer.tips("点击了取消按钮",  {tips: [3, "#FF0000"]});
+                                layer.msg("点击了关闭按钮（Close）");
+                           }
+                       });
+                       $("#testname").val(data.sname);
+                     	$("#citys").val(data.number);
+                   });
+
+
+				}
+			});
+			
+			
+			
 	        //绑定之后，单击搜索按钮才有效果，
 			var $ = layui.$, active = {					
 				reload: function(){						

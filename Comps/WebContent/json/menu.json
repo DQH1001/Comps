@@ -63,14 +63,14 @@
 			"url": "",
 			"children": [{
 				"id": 12,
-				"name": "树形Table列表",
+				"name": "公司列表",
 				"icon": "",
 				"url": "./pages/order/list.html"
 			},{
 				"id": 28,
-				"name": "订单列表",
+				"name": "学生列表",
 				"icon": "",
-				"url": "./pages/order/list.2.html"
+				"url": "./pages/order/list.1.html"
 			}]
 		},
 		{
@@ -98,7 +98,7 @@
 			},
 			{
 				"id": 17,
-				"name": "权限管理",
+				"name": "公司注册",
 				"icon": "",
 				"url": "./pages/admin/ruleRegister1.html"
 			}]

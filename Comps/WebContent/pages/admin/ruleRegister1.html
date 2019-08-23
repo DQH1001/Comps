@@ -41,7 +41,7 @@
 	  </div>  
 	 
 	  <div class="layui-form-item">
-	    <label class="layui-form-label">复选框</label>
+	    <label class="layui-form-label">企业专业</label>
 	   <!-- <span id="prolist2"> </span> -->
 	    <div class="layui-input-block" id="prolist1">
 	     
@@ -57,7 +57,7 @@
 
 	 <input type="hidden" value="abst" name="uname" />
 	  <div class="layui-form-item layui-row" style="width: 1000px;">
-	  	<label class="layui-form-label">上传图片</label>
+	  	<label class="layui-form-label">企业logo</label>
 	  	<div class="layui-upload" style="width: 1000px;">
 	  		<!--  layui-circle  <a id="demoText"></a>
 	  				id="test1" 
@@ -68,7 +68,7 @@
 	  	</div> 
 	  </div>
 	  <div class="layui-form-item layui-row">
-	  	<label class="layui-form-label">上传TXT</label>
+	  	<label class="layui-form-label">企业介绍</label>
 	    <div class="layui-input-inline">
                                 <button style="float: left;" type="button" class="layui-btn layui-btn-warm" id="layuiadmin-upload-book-list">点击上传书籍</button>&nbsp;
                             </div>
@@ -76,12 +76,12 @@
                             <textarea rows="2" cols="10" id="preview2"></textarea> -->
                             <div id="preview1" class="layui-input-inline">
                             <input type="hidden" id="hitxt" value="" />
-         <input type="button" class="layui-btn layui-btn-warm" value="预览txt" onclick="openTxt()" style="margin-left: 20px">      
+         <input type="button" class="layui-btn layui-btn-warm" value="预览txt" onclick="openTxt()" style="margin-left: 100px">      
           
                             </div>
 	  </div>
 	  <div class="layui-form-item layui-row">
-	  	<label class="layui-form-label">Video：</label>
+	  	<label class="layui-form-label">宣传视频</label>
         <input name="classVideo" id="videourl"  value="" autocomplete="off" class="layui-input" type="hidden">
         
         <div class=" layui-upload-drag" id="video" style="border-left: 0px;" type="video">
@@ -91,14 +91,14 @@
           
         </div>  
          <input type="hidden" id="hivideo" value="" />
-         <input type="button" class="layui-btn layui-btn-warm" value="预览" onclick="openVideo()" style="margin-left: 30px">      
-         <input type="radio" name="ctvchoose" value="1" title="宣传视频" checked="">
+         <input type="button" class="layui-btn layui-btn-warm" value="预览" onclick="openVideo()" style="margin-left: 180px">      
+         <span  style="margin-left: 150px"><input type="radio" name="ctvchoose" value="1" title="宣传视频" checked=""></span>
 	  </div>
 	  <div class="layui-form-item layui-row">
 	  	<label class="layui-form-label">多图宣传:</label>
 		<div class="layui-upload">
 			<button type="button" class="layui-btn" id="test2">多图片上传</button>
-			<input type="radio" name="ctvchoose" value="2" title="多图宣传">
+			<span  style="margin-left: 410px"><input type="radio" name="ctvchoose" value="2" title="多图宣传"></span>
 			<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px; margin-left: 110px;">
 				预览图：
 				<div class="layui-upload-list" id="demo2"></div>
