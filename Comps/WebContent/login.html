@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./static/css/font.css">
 	<link rel="stylesheet" href="./static/css/weadmin.css">
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
-
+	<script src="js/jquery-1.10.2.min.js"></script>
 </head>
 <body class="login-bg">
     
@@ -19,16 +19,13 @@
         <div class="message">WeAdmin 1.0-管理登录</div>
         <div id="darkbannerwrap"></div>
         
-        <form method="post" class="layui-form" >
-            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+        <form method="post" class="layui-form">
+            <input name="cid" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
             <hr class="hr15">
-            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <input name="cpwd" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
             <hr class="hr15">
             <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20" >
-            <div>
-            	前端静态展示，请随意输入，即可登录。
-            </div>
         </form>
     </div>
 
@@ -40,18 +37,43 @@
             layui.use(['form','admin'], function(){
               var form = layui.form
               	,admin = layui.admin;
-              // layer.msg('玩命卖萌中', function(){
-              //   //关闭后的操作
-              //   });
               //监听提交
               form.on('submit(login)', function(data){
-                // alert(888)
-                layer.msg(JSON.stringify(data.field),function(){
-                    location.href='./index.html'
-                });
+            	  $.ajax({
+                      url:'coms/login.action',
+                      method:'post',
+                      data:data.field,
+                      dataType:'JSON',
+                      success:function(res){
+                          if(res.msg.indexOf("ok")!=-1){
+                        	  cl("compinfo",JSON.stringify(res));
+                        	  //layer.msg("欢迎登录："+res.cname); 
+      						//跳转主页
+      						location.href="index.html";
+                          }
+                          else{
+                              layer.msg(res.msg);
+                          }
+                      },
+                      error:function(data){
+                          alert("服务器繁忙");
+                      }
+                  })
                 return false;
               });
-            });   
+            });  
+          //要把要存储HTML5缓存的数据放入缓存function
+        	function cl(key,msg){
+        		//存储，IE6~7 cookie 其他浏览器HTML5本地存储
+        		//判断当前浏览器是否支持HTML5，
+        		if (window.localStorage) {
+        			 //封装浏览器缓存 WebStrong，setItem类似setAttribute方法
+        		    localStorage.setItem(key,msg);	
+        		} else {
+        			//封装Cookie
+        		    Cookie.write(key,msg);	
+        		}
+        	} 
     </script>  
     <!-- 底部结束 -->
 </body>

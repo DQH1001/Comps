@@ -22,4 +22,6 @@ public interface ICompsProjectMapper {
 	public List<Words> selectCompWordsBycid(int cid);
 	public List<Scores> selectStusCompsDetail(Comps ocm);
 	public int selectCountStusComps(Comps ocm);
+	public Comps getLogin(Comps com);
+	public List<Projects> getChart(Comps com);
 }

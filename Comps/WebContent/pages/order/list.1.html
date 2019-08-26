@@ -9,7 +9,8 @@
 		<link rel="stylesheet" href="../../static/css/font.css">
 		<link rel="stylesheet" href="../../static/css/weadmin.css">
 		<script src="../../js/jquery-1.10.2.min.js" type="text/text/javascript"></script>
-		<script src="../../lib/layui/layui.js" charset="utf-8"></script>		
+		<script src="../../lib/layui/layui.js" charset="utf-8"></script>	
+		<script src="../../js/jquery-1.10.2.min.js"></script>	
 	</head>
 	<body>
 		<div class="weadmin-nav">
@@ -71,7 +72,28 @@
 			<table id="layuitable1" class="layui-table" lay-filter="demo2">
 				</table>
 		</div>
-		<script>			
+		<script>	
+		//解析缓存login
+		var usernifo= null;
+		//HTML5和大多数浏览器兼容性问题了。
+		if(window.localStorage){
+			//读取HTML5中的缓存，key是deptlist，而且读取出来text格式，还需要JSON.p.. text转换为json格式
+			usernifo=JSON.parse(localStorage.getItem("compinfo"));
+		}else{
+			usernifo=Cookie.read("compinfo");
+		}
+		//要把要存储HTML5缓存的数据放入缓存function
+		function cl(key,msg){
+			//存储，IE6~7 cookie 其他浏览器HTML5本地存储
+			//判断当前浏览器是否支持HTML5，
+			if (window.localStorage) {
+				 //封装浏览器缓存 WebStrong，setItem类似setAttribute方法
+			    localStorage.setItem(key,msg);	
+			} else {
+				//封装Cookie
+			    Cookie.write(key,msg);	
+			}
+		} 
 		layui.extend({
 			admin: '{/}../../static/js/admin'
 		});
@@ -96,7 +118,7 @@
 						url:"../../coms/prolist.action",
 						method:"post",
 						dataType:"json",	
-						data:{"pros":"1,3,4,5,6"},//1,2,4 login的缓存中get
+						data:{"pros":usernifo.c_pros},//1,2,4 login的缓存中get
 						async:false,
 						success:function(data){	
 							var t="<option value='0' >请选择----专业名称</option>";
@@ -112,11 +134,12 @@
 					    }
 				  });			  
 			 }	
+			
 			//form.render();
 		    form.render('select' ,'test1'); //刷新select选择框渲染
 			var tab=layui.table.render({
 								elem:"#layuitable1",
-								url:"../../coms/stusList.action",
+								url:"../../coms/stusList.action?cid="+usernifo.cid,
 								contentType: "application/json",
 								toolbar:'#form3',
 								title:"学生信息列表",									
@@ -124,7 +147,8 @@
 								method: 'POST', //方式
 								id:"listReload",//创建当前ajax layui table的唯一值
 								limit:3,
-								limits:[2,3,5],									
+								cid:usernifo.cid,
+								limits:[2,3,5],	
 								loading:true,
 								cols:[[
 									{
@@ -176,7 +200,7 @@
 			});
 			//layui.tab;刷新button
 			$("#refresh").click(function(){
-				alert("ast");
+				//alert("ast");
 				tab.reload();
 			});			
 			//jQuery绑定layui table搜索监听的type(active属性)和当前单击搜索button的type绑定
@@ -241,12 +265,11 @@
 			var $ = layui.$, active = {					
 				reload: function(){						
 				  //var demoReload = $('#ordernumber');
-				  alert($("#project2").val()+" / "+
-						  $("#ordernumber").val()+" / "+$("#uname").val())
+				  //alert($("#project2").val()+" / "+$("#ordernumber").val()+" / "+$("#uname").val())
 				  
 				  //执行重载
 				  table.reload('listReload', {
-					  url:"../../coms/stusList.action",
+					  url:"../../coms/stusList.action?cid="+usernifo.cid,
 					  page: {
 					  curr: 1 //重新从第 1 页开始
 					}

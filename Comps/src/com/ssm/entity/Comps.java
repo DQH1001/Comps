@@ -5,6 +5,15 @@ import java.util.List;
 public class Comps {
 	private int cid=0,c_tid,numbers=-1,ctvchoose,ccheck,huati,liuyan,usersnumbers,s_pid;
 	 private int currentPage=0,pageSize=5;
+	 private String cname,cdate,c_pros,cdetail,pros,clogo,cimgs,ctext,cvideo,cusername,cpwd;
+	public String getCpwd() {
+		return cpwd;
+	}
+
+	public void setCpwd(String cpwd) {
+		this.cpwd = cpwd;
+	}
+
 	public int getCurrentPage() {
 		return currentPage;
 	}
@@ -30,7 +39,7 @@ public class Comps {
 		this.usersnumbers = usersnumbers;
 	}
 
-	private String cname,cdate,c_pros,cdetail,pros,clogo,cimgs,ctext,cvideo,cusername;
+	
 //	private List<Projects> listPro=null;
 	public Comps() {}
 

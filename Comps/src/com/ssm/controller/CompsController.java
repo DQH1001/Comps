@@ -205,12 +205,12 @@ public class CompsController {
     @RequestMapping(value="/stusList")
 	@ResponseBody
 	public Map<String,Object> StusCompyList(HttpServletRequest req,
-			@RequestBody Scores sco) {
+			@RequestBody Scores sco,int cid) {
 		try {
 			req.setCharacterEncoding("utf-8");
-			System.out.println("page:"+sco.getPage()+",limit:"+sco.getLimit());
+			System.out.println("page:"+sco.getPage()+",limit:"+sco.getLimit()+",cid:"+cid);
 			Comps comps=new Comps();
-			comps.setCid(1);
+			comps.setCid(cid);
 			
 			//1   3：   sql limit 0,3    2 3    limit 3 ，3
 			comps.setCurrentPage((sco.getPage()-1)*sco.getLimit());//1 2 当前页 替换为limit的第一个数值
@@ -237,6 +237,21 @@ public class CompsController {
 			e.printStackTrace();
 			return null;
 		}		
+	}
+    
+    //登录验证
+    @RequestMapping(value="/login")
+	@ResponseBody
+	public Map<String,Object> getLogin(HttpServletRequest req,Comps com) {
+    	Map<String,Object> listMap=this.comModel.getLogin(com);	
+		return listMap;   	
+	}
+  //主页chart图
+    @RequestMapping(value="/getChart")
+	@ResponseBody
+	public Map<String,Object> getChart(HttpServletRequest req,int cid,String projects) {
+    	Map<String,Object> listMap=this.comModel.getChart(cid,projects);	
+		return listMap;   	
 	}
 //    public static void main(String[] args) {
 //    	ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");

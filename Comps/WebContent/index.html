@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="./static/css/font.css">
 		<link rel="stylesheet" href="./static/css/weadmin.css">
 		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
-
+		<script src="js/jquery-1.10.2.min.js"></script>
 	</head>
 
 	<body>
@@ -44,20 +44,23 @@
 				</li>
 			</ul>
 			<ul class="layui-nav right" lay-filter="">
-				<li class="layui-nav-item">
-					<a href="javascript:;">Admin</a>
+				<li class="layui-nav-item" id="logok">
+					<a href="javascript:;"><span id="cname"></span></a>
 					<dl class="layui-nav-child">
 						<!-- 二级菜单 -->
 						<dd>
-							<a onclick="WeAdminShow('个人信息','http://www.baidu.com')">个人信息</a>
+							<a onclick="WeAdminShow('我的桌面','./pages/welcome1.html')">我的桌面</a>
 						</dd>
 						<dd>
 							<a onclick="WeAdminShow('切换帐号','./login.html')">切换帐号</a>
 						</dd>
 						<dd>
-							<a class="loginout" href="./login.html">退出</a>
+							<a class="loginout" id="logout" href="./login.html">退出</a>
 						</dd>
 					</dl>
+				</li>
+				<li class="layui-nav-item" id="logno">
+					<a class="loginout" id="logout" href="./login.html">登录</a>	
 				</li>
 				<li class="layui-nav-item to-index">
 					<a href="https://www.jiuwei.com/" target="_blank">前台首页</a>
@@ -103,6 +106,32 @@
 //			layui.use('admin', function(){
 //			  var admin = layui.admin;
 //			});
+
+			//解析缓存login
+			var usernifo= null;
+			//HTML5和大多数浏览器兼容性问题了。
+			if(window.localStorage){
+				//读取HTML5中的缓存，key是deptlist，而且读取出来text格式，还需要JSON.p.. text转换为json格式
+				usernifo=JSON.parse(localStorage.getItem("compinfo"));
+			}else{
+				usernifo=Cookie.read("compinfo");
+			}
+			//菜单栏显示
+			if(usernifo!=null && usernifo!=""){
+				$("#cname").html(usernifo.cname);
+			    $("#logok").css('display','block');
+			    $("#logno").css('display','none');
+			}else{
+				$("#logno").css('display','block');
+			    $("#logok").css('display','none');
+			}
+			//退出清缓存
+			$("#logout").bind("click",function(){
+				if (window.localStorage) {
+					window.localStorage.removeItem("compinfo");	
+				}
+			});
+			
 			layui.config({
 				base: './static/js/'
 				,version: '101100'

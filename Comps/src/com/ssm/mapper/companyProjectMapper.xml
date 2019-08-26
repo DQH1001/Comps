@@ -15,6 +15,7 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
       <result column="c_tid" property="c_tid" jdbcType="INTEGER" javaType="Integer" />  
       <result column="c_pros" property="c_pros" jdbcType="VARCHAR" javaType="string" />
       <result column="cusername" property="cusername" jdbcType="VARCHAR" javaType="string" />
+      <result column="cpwd" property="cpwd" jdbcType="VARCHAR" javaType="string" />
       <result column="cdetail" property="cdetail" jdbcType="VARCHAR" javaType="string" />  
       <result column="numbers" property="numbers" jdbcType="INTEGER" javaType="Integer" /> 
       <result column="usersnumbers" property="usersnumbers" jdbcType="INTEGER" javaType="Integer" />
@@ -67,6 +68,15 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
      <association property="comp" javaType="com.ssm.entity.Comps"
     	       resultMap="CompanyResult"/>
     </resultMap>
+    
+    <select id="getChart" resultMap="ProjectsResult" parameterType="com.ssm.entity.Comps">
+     	select p.*, (select count(*) from scores where s_pid=p.pid and s_cid=#{cid}) 
+		as numbers from projects p where FIND_IN_SET(p.pid,#{c_pros})
+    </select>   
+   
+     <select id="getLogin" resultMap="CompanyResult" parameterType="com.ssm.entity.Comps">
+     	   SELECT c.* from comps c WHERE c.cid=#{cid}
+    </select>
     
     <select id="selectStusCompsDetail" resultMap="ScoresResult" parameterType="com.ssm.entity.Comps">
 		SELECT s.*,t.sname,t.slogo,p.pname,c.clname , 

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssm.entity.Comps;
+import com.ssm.entity.Projects;
 import com.ssm.entity.*;
 import com.ssm.mapper.ICompsProjectMapper;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
@@ -207,14 +209,49 @@ public class CompanyModel {
 		map.put("count",cm.selectCountStusComps(ocm));
 		return map;
 	}
+	
+	public Map<String, Object> getLogin(Comps com) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		Comps c=this.cm.getLogin(com);
+		if(c==null) {
+			map.put("msg", "账号错误");
+		}else if(!c.getCpwd().equals(com.getCpwd())) {
+			map.put("msg", "密码错误");
+		}else {
+			map.put("msg", "ok");
+			map.put("cid", c.getCid());
+			map.put("cname", c.getCname());
+			map.put("clogo", c.getClogo());
+			map.put("c_pros", c.getC_pros());
+		}
+		return map;
+	}
+	public Map<String, Object> getChart(int cid,String projects) {
+		List<Projects> pros=new ArrayList();
+		Comps com=new Comps();
+		com.setCid(cid);
+		com.setC_pros(projects);
+		//System.out.println(com.getC_pros()+" / "+com.getCid());
+		pros=cm.getChart(com);
+		Map<String, Object> map=new HashMap<String, Object>();
+		List<String> ls1=new ArrayList<String>();
+		List<Integer> ls2=new ArrayList<Integer>();
+		for(Projects pro:pros) {
+			ls1.add(pro.getPname());
+			ls2.add(pro.getNumbers());
+		}
+		map.put("pnames", ls1);
+		map.put("pnumbers", ls2);
+		return map;
+	}
 	//专业插入(院长功能,待完善)
-	public boolean SaveProject(Projects pro) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	public static void main(String[] args) {
-		ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
-		CompanyModel sm=(CompanyModel)ac.getBean("compsModel");
-		System.out.println(sm.selectCompanyCountsBycid(1).toString());
-	}
+		public boolean SaveProject(Projects pro) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+//		public static void main(String[] args) {
+//			ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
+//			CompanyModel sm=(CompanyModel)ac.getBean("compsModel");
+//			System.out.println(sm.getChart(1,"1,2,3,4,5,6").toString());
+//		}
 }
