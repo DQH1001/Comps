@@ -24,4 +24,8 @@ public interface ICompsProjectMapper {
 	public int selectCountStusComps(Comps ocm);
 	public Comps getLogin(Comps com);
 	public List<Projects> getChart(Comps com);
+	public int updateCompWordsBywhid(int whid);
+	public int insertCompWords(Words word);
+	public int deleteCompWordsBywid(Words word);
 }
+

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssm.entity.Words;
 import com.ssm.entity.*;
 import com.ssm.model.CompanyModel;
 
@@ -252,6 +253,56 @@ public class CompsController {
 	public Map<String,Object> getChart(HttpServletRequest req,int cid,String projects) {
     	Map<String,Object> listMap=this.comModel.getChart(cid,projects);	
 		return listMap;   	
+	}
+    //删除留言
+    @RequestMapping(value="/deleteWords")
+	@ResponseBody
+	public String deleteWords(HttpServletRequest req,Words word) {
+    	int count=this.comModel.deleteCompWordsBywid(word);	
+		return count>0?"ok":"no";   	
+	}
+    //插入留言
+    @RequestMapping(value="/uploadImg",method=RequestMethod.POST)
+	private String fildUpload2(Words word ,
+			@RequestParam(value="file",required=false) MultipartFile file,
+			HttpServletRequest request)throws Exception{
+    	
+		String pathRoot=request.getRealPath("upload/comps/");
+		
+		//台式机路径
+		String pathRootImg="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
+		//平板路径
+//		String pathRootImg="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
+		if(!file.isEmpty()){				
+			//生成uuid作为文件名称
+			//String uuid = UUID.randomUUID().toString().replaceAll("-","");
+			//获得文件类型（可以判断如果不是图片，禁止上传）
+			String contentType=file.getContentType();
+			//获得文件后缀名称
+			String imageName=contentType.substring(contentType.indexOf("/")+1);
+			//file name jpeg - image/jpeg
+			System.out.println(file.getOriginalFilename()+" name "+imageName+" - "+contentType);
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(pathRoot+file.getOriginalFilename()));
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(pathRootImg+file.getOriginalFilename()));
+			word.setWimages(file.getOriginalFilename());
+		}	
+		System.out.println(word.toString());
+		boolean count=true;
+		int wid=word.getWid();
+		if(wid!=0) {
+			count=this.comModel.updateCompWordsBywhid(word.getWhid());
+		}
+		if(count) {
+			count=this.comModel.insertCompWords(word);
+			if(count) {
+				return "ok";
+			}else {
+				return "insert no";
+			}
+		}else {
+			return "update no";
+		}			
+		
 	}
 //    public static void main(String[] args) {
 //    	ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssm.entity.Comps;
 import com.ssm.entity.Projects;
+import com.ssm.entity.Words;
 import com.ssm.entity.*;
 import com.ssm.mapper.ICompsProjectMapper;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
@@ -244,6 +245,27 @@ public class CompanyModel {
 		map.put("pnumbers", ls2);
 		return map;
 	}
+	//更新公司话题被回复数量
+		public boolean updateCompWordsBywhid(int whid) {
+			int count=0;
+	    	count=cm.updateCompWordsBywhid(whid);
+	    	return count>0;
+		}
+		//插入留言
+		public boolean insertCompWords(Words word) {
+			int count=0;
+			if(word.getW_sid()==0) {
+				word.setW_sid(1);
+			}
+			count=cm.insertCompWords(word);
+	    	return count>0;
+		}
+		//删除留言
+		public int deleteCompWordsBywid(Words word) {
+			int count=0;
+			count=cm.deleteCompWordsBywid(word);
+	    	return count;
+		}		
 	//专业插入(院长功能,待完善)
 		public boolean SaveProject(Projects pro) {
 			// TODO Auto-generated method stub

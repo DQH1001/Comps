@@ -66,7 +66,9 @@
   <script id="form3" type="text/html"> 
   
 	 <button class="layui-btn layui-btn-warm" id="refresh" >
-            <i class="layui-icon layui-icon-refresh"></i>刷新</button> 		   
+            <i class="layui-icon layui-icon-refresh"></i>刷新</button> 
+ <button class="layui-btn  layui-btn-normal" id="goWords" >
+			<i class="layui-icon layui-icon-triangle-r"></i>去回帖</button>		   
   
  </script>				
 			<table id="layuitable1" class="layui-table" lay-filter="demo2">
@@ -192,12 +194,16 @@
 										templet:function (row) {
 											/* var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
 											var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> "; */
-											var del=' <a class="layui-btn layui-btn-mini" lay-event="edit">留言</a>';
+											var del=' <a class="layui-btn layui-btn-mini" lay-event="edit">给他主页留言</a>';
 											return del;
 										}
 									}
 								]]
 			});
+			$("#goWords").click(function(){
+				//alert("ast");
+				location.href="detailCom.html";
+			});	
 			//layui.tab;刷新button
 			$("#refresh").click(function(){
 				//alert("ast");

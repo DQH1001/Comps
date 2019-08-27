@@ -68,7 +68,19 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
      <association property="comp" javaType="com.ssm.entity.Comps"
     	       resultMap="CompanyResult"/>
     </resultMap>
-    
+    <delete id="deleteCompWordsBywid" parameterType="int">
+    DELETE FROM words WHERE wid=#{wid} or whid=#{wid}
+    </delete>
+    <update id="updateCompWordsBywhid" parameterType="int">
+ 		update words set wcount=wcount+1 where wid=#{whid}
+ 	</update>
+ 	
+ 	<insert id="insertCompWords" parameterType="com.ssm.entity.Words">
+ 		insert into words value(null,#{wtitle},#{wcontent},now(),#{w_cid},#{w_sid},
+ 		#{wimages},null,"c",0,#{whid})
+ 	</insert>
+ 	
+ 	
     <select id="getChart" resultMap="ProjectsResult" parameterType="com.ssm.entity.Comps">
      	select p.*, (select count(*) from scores where s_pid=p.pid and s_cid=#{cid}) 
 		as numbers from projects p where FIND_IN_SET(p.pid,#{c_pros})
@@ -109,11 +121,10 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
 			and (SELECT COUNT(*) from words WHERE words.w_cid=#{cid} and words.w_sid=s.s_sid)>=#{numbers}  
 		</if>
 	</select>
-    
-    
+	
     <select id="selectCompWordsBycid" resultMap="WordsResult" parameterType="int">
      	   SELECT w.*,s.*,c.* from words w,comps c,stus s WHERE w.w_cid=c.cid 
-				and w.w_sid=s.sid and w.whid=0 and w.w_cid=#{cid} order by w.wdate desc limit 5
+				and w.w_sid=s.sid and w.w_cid=#{cid}
     </select>
     
     <!-- 查询公司被选人数，话题数，留言数，clogo，cname -->

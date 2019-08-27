@@ -1,0 +1,407 @@
+ 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Fly Template v3.0，基于 layui 的极简社区页面模版</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="fly,layui,前端社区">
+  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+  <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+  <link rel="stylesheet" href="../../lib/layui/css/global.css">
+    <link href="../../js/layer.css" rel="stylesheet">
+  <script type="text/javascript" src="../../js/bootstrap-fileupload.min.js"></script>
+
+</head>
+<body>
+
+
+
+<div class="weadmin-body" id="app">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md8 content detail">
+     
+
+      <div class="fly-panel detail-box" id="flyReply">
+        <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+          <legend>{{cname}}</legend>
+        </fieldset>
+
+        <ul class="jieda" id="jieda" v-for="item in lsWords">
+        
+          <li data-id="111" class="jieda-daan"  v-if="item.whid==0">
+          <hr>
+            <a name="item-1111111111"></a>
+            <div class="detail-about detail-about-reply">
+              <a class="fly-avatar" href="">
+                <img :src="'../'+item.slogo" alt=" " v-if="item.wauthor=='s'">
+                <img :src="clogo" alt=" " v-else>
+              </a>
+              <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                 <cite  v-if="item.wauthor=='s'">{{item.sname}}</cite>
+                  <cite  v-else>{{cname}}</cite>
+                  <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+
+                </a>
+                 <!--
+                <span>(楼主)</span>               
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+                <span style="color:#999">（该号已被封）</span>
+                -->
+              </div>
+
+              <div class="detail-hits">
+                <span>主题：{{item.wtitle}},时间：{{item.wdate}}</span>
+              </div>
+            </div>
+            <div class="detail-body jieda-body photos">
+              <p>{{item.wcontent}}</p>
+              <img :src="'../../../WeAdmin/upload/'+item.wimages" width="80px" height="70px" v-if="item.wimages!=null && item.wimages!=''&&item.wauthor=='s'"/>
+			  <img :src="'../../upload/comps/'+item.wimages" width="80px" height="70px" v-if="item.wimages!=null && item.wimages!='' &&item.wauthor=='c'"/>
+            </div>
+            <div class="jieda-reply">
+              <span class="jieda-zan zanok" type="zan">
+                <i class="iconfont icon-liulanyanjing"></i>
+                <em>{{item.wcount}}</em>
+              </span>
+              <span type="reply" @click="reply(item.wid,item.wtitle,item.w_sid)">
+                <i class="iconfont icon-svgmoban53"></i>
+                回复
+              </span>
+              <div class="jieda-admin">
+                <!-- <span type="edit">编辑</span> -->
+                <span type="del"  @click="delWords(item.wid)">删除</span>
+                <!-- <span class="jieda-accept" type="accept">采纳</span> -->
+              </div>
+            </div>
+           </li>
+            
+            <li data-id="111" class="jieda-daan" style="margin-left:150px;" v-for="items in lsWords" v-if="items.whid==item.wid">
+            <a name="item-1111111111"></a>
+            <div class="detail-about detail-about-reply">
+              <a class="fly-avatar" href="">
+                <img :src="'../'+items.slogo" alt=" " v-if="items.wauthor=='s'">
+                <img :src="clogo" alt=" " v-else>
+              </a>
+              <div class="fly-detail-user">
+                <a href="" class="fly-link">
+                  <cite  v-if="items.wauthor=='s'">{{items.sname}}</cite>
+                  <cite  v-else>{{cname}}</cite>
+                  <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+
+                </a>
+                 <!--
+                <span>(楼主)</span>               
+                <span style="color:#5FB878">(管理员)</span>
+                <span style="color:#FF9E3F">（社区之光）</span>
+                <span style="color:#999">（该号已被封）</span>
+                -->
+              </div>
+
+              <div class="detail-hits">
+                <span>主题：{{items.wtitle}},时间：{{items.wdate}}</span>
+              </div>
+            </div>
+            <div class="detail-body jieda-body photos">
+              <p>{{items.wcontent}}</p>
+              <img :src="'../../../WeAdmin/upload/'+items.wimages" width="80px" height="70px" v-if="items.wimages!=null && items.wimages!='' &&items.wauthor=='s'"/>
+              <img :src="'../../upload/comps/'+items.wimages" width="80px" height="70px" v-if="items.wimages!=null && items.wimages!='' &&items.wauthor=='c'"/>
+
+            </div>
+            
+          </li>
+       
+        </ul>
+        
+        <div class="layui-form layui-form-pane">
+         <form class="layui-form" action="#"  lay-filter="test"
+	id="form2" enctype="multipart/form-data">
+	          <div class="layui-form-item">
+			    <label class="layui-form-label">主题</label>
+			    <div class="layui-input-block">
+			      <input type="text" id="wtit" name="wtitle" lay-verify="title" autocomplete="off" placeholder="点击回复或主动发布一个话题吧" class="layui-input">
+			    
+                            <input id="sidd" name="w_sid" type="hidden" value="0">
+                            <input id="cidd" name="w_cid" type="hidden">
+                            <input id="whid" name="whid" type="hidden" value="0">
+                            <input id="widd" name="wid" type="hidden" value="0">
+			    </div>
+			  </div>
+            <div class="layui-form-item layui-form-text">
+              <a name="comment"></a>
+              <div class="layui-input-block">
+                <textarea id="wcont" name="wcontent" required lay-verify="required" placeholder="请输入内容"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+              </div>
+            </div>
+            
+			  <div class="layui-form-item layui-row" style="width: 1000px;">
+			  	
+			  	<div class="layui-upload" style="width: 1000px;">
+			  		<!--  layui-circle  <a id="demoText"></a>
+			  				id="test1" 
+			  		-->
+			  		<img class="layui-upload-img"  onclick="openImg()" id="showImg"
+			  			 width="300" height="150" style="display: none;">              
+			  		<button type="button" class="layui-btn" id="test1">浏览</button>
+			  	</div> 
+			  </div>
+            <div class="layui-form-item">
+              <input type="hidden" name="jid" value="123">
+              <button class="layui-btn" lay-filter="demo2" type="reset" @click="sub()" >发布</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md4">
+      <dl class="fly-panel fly-list-one">
+        <dt class="fly-panel-title">本周热议</dt>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        <dd>
+          <a href="">基于 layui 的极简社区页面模版</a>
+          <span><i class="iconfont icon-pinglun1"></i> 16</span>
+        </dd>
+        
+      </dl>
+
+
+
+    </div>
+  </div>
+</div>
+<script src="../../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+	<script type="text/javascript" src="../../js/vue-resource.min.js"></script>
+<script src="../../lib/layui/layui.js"></script>
+<script src="../../js/layer.js"></script>
+<script type="text/javascript">
+		var app=new Vue({
+			el:"#app",
+			data:{
+				clogo:'',
+				cname:'',
+				lsWords:'',
+				usernifo:''
+			}, 
+			mounted(){
+				this.getInit();
+				this.getCompsWords();
+			},
+			methods:{
+				getInit(){
+					//HTML5和大多数浏览器兼容性问题了。
+					if(window.localStorage){
+						//读取HTML5中的缓存，key是deptlist，而且读取出来text格式，还需要JSON.p.. text转换为json格式
+						this.usernifo=JSON.parse(localStorage.getItem("compinfo"));
+					}else{
+						this.usernifo=Cookie.read("compinfo");
+					}
+					this.clogo="../../../WeAdmin/images/clogo/"+this.usernifo.clogo;
+					this.cname=this.usernifo.cname;
+					
+				},
+				cl(key,msg){
+					//存储，IE6~7 cookie 其他浏览器HTML5本地存储
+					//判断当前浏览器是否支持HTML5，
+					if (window.localStorage) {
+						 //封装浏览器缓存 WebStrong，setItem类似setAttribute方法
+					    localStorage.setItem(key,msg);	
+					} else {
+						//封装Cookie
+					    Cookie.write(key,msg);	
+					}
+				},
+				getCompsWords(){
+					this.$http.post('../../coms/selectCompWords.action',{cid:this.usernifo.cid},
+							{emulateJSON:true}).then(function(res){
+								this.lsWords=res.body;							
+							},function(res){
+								alert("error")
+							});
+				},
+				delWords(wid){
+					if(confirm("将删除该话题及所有评论")){
+						this.$http.post('../../coms/deleteWords.action',{wid:wid},
+								{emulateJSON:true}).then(function(res){
+									if(res.body.indexOf("ok")!=-1){
+										layer.msg("删除成功");
+										this.getCompsWords();	
+									}else{
+										layer.msg("删除失败");
+										this.getCompsWords();	
+									}						
+								},function(res){
+									alert("error")
+								});
+					}
+					return;
+					
+				},
+				reply(wwid,wwtitle,sid){
+					$("#wtit").val(wwtitle).focus();
+					$("#widd").val(wwid);
+					$("#sidd").val(sid);
+					$("#whid").val(wwid);
+				},
+				sub(){
+					$("#cidd").val(this.usernifo.cid);//cid
+					
+					
+					var foData=new FormData($("#form2")[0]);			
+					 let config = { headers: { 'Content-Type': 'multipart/form-data' } };
+				        this.uping = 1;
+				        this.$http.post('../../coms/uploadImg.action', foData,config).then(function (res) {
+				        	alert("--------");
+				        },function(res){
+				        	
+				        	
+				        		layer.msg("发布成功");
+					    		this.getCompsWords();					    		 
+					    		$("#wtit").val("");
+					    		$("#sidd").val("0");
+					    		$("#cidd").val(this.usernifo.cid);
+					    		$("#widd").val("0");
+					    		$("#whid").val("0");
+					    		$("#wcont").val("");
+					    		$('#showImg').css('display','none');
+					         	
+						 });	
+
+				}
+			
+			}
+		})
+		</script>
+		<script type="text/javascript">
+		layui.use('upload', function(){
+			var $ = layui.jquery,
+			upload = layui.upload;
+			var uploadInst = upload.render({
+				elem: '#test1',
+				url: '../../coms/uploadImg.action',
+				auto: false, //不自动上传
+				before: function(obj){
+					//before如果不自动上传，函数没有意义
+					obj.preview(function(index, file, result){						
+						$('#showImg').attr('src', result); //图片链接（base64）
+					});
+				},
+				choose: function (obj) {
+					//choose如果不自动上传，那么choose是有价值的
+					//预读本地文件，也就是type=file的效果
+					obj.preview(function (index, file, result) {
+						$('#showImg').css('display','block').attr('src', result);
+						//$('#test1').css('display','none');
+					})
+				}
+				//,done: function(res){					
+				//}
+				,error: function(){
+					 alert("上传失败");
+				}
+			});			
+			
+		});
+		function openImg() {
+			var idBar = '#showImg';
+			var src = $(idBar)[0].src;
+			var width = $(idBar).width();
+			var height = $(idBar).height();
+			var scaleWH = width / height;
+			var bigH = 550;
+			var bigW = scaleWH * bigH;
+			if (bigW > 1000) {
+				bigW = 1000;
+				bigH = bigW / scaleWH;
+			}
+			// 放大预览图片
+			parent.layer.open({
+				type: 1,
+				title: false,
+				closeBtn: 1,
+				shadeClose: true,
+				area: [bigW + 'px', bigH + 'px'], //宽高
+				content: '<img width="' + bigW + '" src="' + src + '" />'
+			});
+		};
+		layui.use(['form','jquery','layedit', 'laydate'], function(){
+		  var form = layui.form,
+		  layer = layui.layer,
+		  layedit = layui.layedit,
+		  laydate = layui.laydate,
+		  $ = layui.jquery;
+		  //admin=layui.admin;		  
+		  //日期
+		  laydate.render({
+		    elem: '#date'
+		  });
+		  laydate.render({
+		    elem: '#date1'
+		  });		  
+		
+		  //自定义验证规则
+		  form.verify({
+		    title: function(value){
+		      if(value.length < 2 ){
+		        return '请输入不小于两个字符的内容';
+		      }
+		    },
+		    content: function(value){
+		      layedit.sync(editIndex);
+		    }
+		  });
+		  
+ 
+	
+		  
+		/*  //监听提交
+		  form.on('submit(demo2)', function(data){
+		    var foData=new FormData($("#form2")[0]);
+		    $("#form2").ajaxSubmit({
+		    			url: "../../coms/upload.action",    //批量固定路径上传
+		    		    type: 'POST',  
+		    		    data: foData, 
+		    		    dataType: "text",   //返回的异步数据格式为不能json，必须是文本格式
+		    		    success:function(data){
+		    		    	if(data.indexOf("ok")!=-1){
+		    		    		layer.msg("发布成功");
+		    		    	}else{
+		    		    		layer.msg("发布失败");
+		    		    	}
+		    			},
+		    		    error:function(){
+		    		    	alert("eerr9");
+		    		    }
+		    		});
+		    // return false;
+		  }); */		 
+		});
+		</script>
+</body>
+</html>

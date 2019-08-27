@@ -120,11 +120,11 @@
 				<div class="welcome-edge col-lg-3">
 					<!--最新留言-->
 					<div class="panel panel-default comment-panel">
-						<div class="panel-header">最新话题</div>
+						<div class="panel-header">全部话题</div>
 						<div class="panel-body">
 							<div class="commentbox">
 								<ul class="commentList" v-for="item in lsWords">
-								  <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" :src="item.slogo"></i></a>
+								  <li class="item cl" v-if="item.whid==0"> <a href="#"><i class="avatar size-L radius"><img alt="" :src="item.slogo"></i></a>
 								    <div class="comment-main">
 								      <header class="comment-header">
 								        <div class="comment-meta"><a class="comment-author" href="#">{{item.sname}}</a> 发布于
