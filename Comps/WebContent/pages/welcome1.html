@@ -52,8 +52,8 @@
 										<span class="iconfont">&#xe602;</span>
 									</div>
 									<div class="right-text-con">
-										<p class="name">话题数</p>
-										<p><span class="color-blue">{{huati}}</span>数据<span class="iconfont">&#xe628;</span></p>
+										<p class="name">员工数</p>
+										<p><span class="color-blue">{{usersnumbers}}</span>数据<span class="iconfont">&#xe628;</span></p>
 									</div>
 								</a>
 							</li>
@@ -63,8 +63,8 @@
 										<span class="iconfont">&#xe605;</span>
 									</div>
 									<div class="right-text-con">
-										<p class="name">评论数</p>
-										<p><span class="color-green">{{liuyan}}</span>数据<span class="iconfont">&#xe60f;</span></p>
+										<p class="name">话题数</p>
+										<p><span class="color-green">{{huati}}</span>数据<span class="iconfont">&#xe60f;</span></p>
 									</div>
 								</a>
 							</li>
@@ -74,8 +74,8 @@
 										<span class="iconfont">&#xe601;</span>
 									</div>
 									<div class="right-text-con">
-										<p class="name">员工数</p>
-										<p><span class="color-green">{{usersnumbers}}</span>数据<span class="iconfont">&#xe60f;</span></p>
+										<p class="name">需要变动的人数(负为减)</p>
+										<p><span class="color-green">{{cnumChange}}</span>数据<span class="iconfont">&#xe60f;</span></p>
 									</div>
 								</a>
 							</li>
@@ -253,7 +253,7 @@
 				cname:'',
 				numbers:'',
 				huati:'',
-				liuyan:'',
+				cnumChange:'',
 				usersnumbers:'',
 				cvideo:'',
 				cimgs:'',
@@ -296,7 +296,7 @@
 								this.cname=res.body.cname;
 								this.numbers=res.body.numbers;
 								this.huati=res.body.huati;
-								this.liuyan=res.body.liuyan;
+								this.cnumChange=res.body.cnumChange;
 								this.usersnumbers=res.body.usersnumbers;
 								this.ctvchoose=res.body.ctvchoose;
 								//1:视频，2：轮播图

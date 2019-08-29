@@ -139,7 +139,7 @@ public class CompanyModel {
 		}
 		return list;
 	}
-	//查询公司被选人数，话题数，留言数，员工数，轮播图，视频，clogo，cname
+	//查询公司被选人数，话题数，需要变动的人数，员工数，轮播图，视频，clogo，cname
 	public Map<String,Object> selectCompanyCountsBycid(int cid){
 		Comps comps=this.cm.selectCompanyCountsBycid(cid);
 		Map<String,Object> map=null;
@@ -160,7 +160,7 @@ public class CompanyModel {
 		map.put("numbers", comps.getNumbers());
 		map.put("usersnumbers", comps.getUsersnumbers());
 		map.put("huati", comps.getHuati());
-		map.put("liuyan", comps.getLiuyan());
+		map.put("cnumChange", comps.getCnumChange());
 		return map;
 	}
 	//根据cid查询公司所有话题

@@ -13,6 +13,7 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
       <result column="cname" property="cname" jdbcType="VARCHAR" javaType="string" />
       <result column="cdate" property="cdate" jdbcType="VARCHAR" javaType="string" />
       <result column="c_tid" property="c_tid" jdbcType="INTEGER" javaType="Integer" />  
+       <result column="cnumChange" property="cnumChange" jdbcType="INTEGER" javaType="Integer" />
       <result column="c_pros" property="c_pros" jdbcType="VARCHAR" javaType="string" />
       <result column="cusername" property="cusername" jdbcType="VARCHAR" javaType="string" />
       <result column="cpwd" property="cpwd" jdbcType="VARCHAR" javaType="string" />
@@ -127,9 +128,9 @@ namespace="com.ssm.entity":针对该包下的所以实体类对象映射配置�
 				and w.w_sid=s.sid and w.w_cid=#{cid}
     </select>
     
-    <!-- 查询公司被选人数，话题数，留言数，clogo，cname -->
+    <!-- 查询公司被选人数，话题数，需要变动的人数，clogo，cname -->
     <select id="selectCompanyCountsBycid" resultMap="CompanyResult" parameterType="int">
-    select c.clogo,c.cname,c.cvideo,c.cimgs,c.ctvchoose,
+    select c.clogo,c.cname,c.cvideo,c.cimgs,c.ctvchoose,c.cnumChange,
 (select count(*) from scores s where s.s_cid=c.cid) as numbers ,
 (select count(*) from users u where u.u_cid=c.cid) as usersnumbers ,
 (select count(*) from words w where w.whid=0 and w_cid=c.cid) as huati ,

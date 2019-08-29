@@ -3,11 +3,19 @@ package com.ssm.entity;
 import java.util.List;
 
 public class Comps {
-	private int cid=0,c_tid,numbers=-1,ctvchoose,ccheck,huati,liuyan,usersnumbers,s_pid;
+	private int cid=0,c_tid,numbers=-1,ctvchoose,ccheck,huati,liuyan,usersnumbers,s_pid,cnumChange;
 	 private int currentPage=0,pageSize=5;
 	 private String cname,cdate,c_pros,cdetail,pros,clogo,cimgs,ctext,cvideo,cusername,cpwd;
 	public String getCpwd() {
 		return cpwd;
+	}
+
+	public int getCnumChange() {
+		return cnumChange;
+	}
+
+	public void setCnumChange(int cnumChange) {
+		this.cnumChange = cnumChange;
 	}
 
 	public void setCpwd(String cpwd) {

@@ -1,0 +1,58 @@
+{
+	"status": 0,
+	"msg": "ok",
+	"data": [
+	{
+			"id": 1,
+			"name": "我的主页",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 2,
+				"name": "我的桌面",
+				"icon": "",
+				"url": "./pages/welcome1.html"
+			}]
+		},
+		{
+			"id": 11,
+			"name": "列表查看",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 12,
+				"name": "公司列表",
+				"icon": "",
+				"url": "./pages/order/list.html"
+			},{
+				"id": 28,
+				"name": "学生列表",
+				"icon": "",
+				"url": "./pages/order/list.1.html"
+			}]
+		},{
+			"id": 3,
+			"name": "我的贴吧",
+			"icon": "&#xe723;",
+			"url": "",
+			"children": [{
+				"id": 4,
+				"name": "话题页",
+				"icon": "",
+				"url": "./pages/order/detailCom.html"
+			}]
+		},
+		{
+			"id": 13,
+			"name": "管理员权限",
+			"icon": "&#xe726;",
+			"url": "",
+			"children": [{
+				"id": 17,
+				"name": "公司注册",
+				"icon": "",
+				"url": "./pages/admin/ruleRegister1.html"
+			}]
+		}
+	]
+}
