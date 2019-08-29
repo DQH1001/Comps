@@ -16,8 +16,8 @@
 		<div class="weadmin-nav">
 			<span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">订单管理</a>
-        <a><cite>订单列表</cite></a>
+        <a href="">列表查看</a>
+        <a><cite>学生列表</cite></a>
       </span>
 			<a class="layui-btn layui-btn-sm" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
 				<i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -187,17 +187,16 @@
 										field:"number",
 										title:"留言数量",
 										align:"center"
-									},{
+									}/* ,{
 										field:"id",
 										title:"操作",
 										align:"center",
 										templet:function (row) {
-											/* var del='<a href="javascript:deleteById('+row.id+')" title="删除"><span style="font-size: 25px;color: #FF0000" class="layui-icon layui-icon-delete"> ';
-											var update="<a href=' ' title='更新'><span style='font-size: 25px;color: #0000FF' class='layui-icon layui-icon-table'> "; */
+											
 											var del=' <a class="layui-btn layui-btn-mini" lay-event="edit">给他主页留言</a>';
 											return del;
 										}
-									}
+									} */
 								]]
 			});
 			$("#goWords").click(function(){
