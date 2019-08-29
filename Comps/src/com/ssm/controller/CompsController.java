@@ -71,6 +71,7 @@ public class CompsController {
     *  field: 'file'  ∫Õ @RequestParam(value="file",required=false)∫Ù”¶
     */
     @RequestMapping(value="/upload",method=RequestMethod.POST)
+    @ResponseBody
 	private String fildUpload(Comps coms ,
 			@RequestParam(value="file",required=false) MultipartFile[] file,
 			HttpServletRequest request)throws Exception{
@@ -263,6 +264,7 @@ public class CompsController {
 	}
     //≤Â»Î¡Ù—‘
     @RequestMapping(value="/uploadImg",method=RequestMethod.POST)
+    @ResponseBody
 	private String fildUpload2(Words word ,
 			@RequestParam(value="file",required=false) MultipartFile file,
 			HttpServletRequest request)throws Exception{
@@ -289,20 +291,21 @@ public class CompsController {
 		System.out.println(word.toString());
 		boolean count=true;
 		int wid=word.getWid();
+		String s=null;
 		if(wid!=0) {
 			count=this.comModel.updateCompWordsBywhid(word.getWhid());
 		}
 		if(count) {
 			count=this.comModel.insertCompWords(word);
 			if(count) {
-				return "ok";
+				s="ok";
 			}else {
-				return "insert no";
+				s="insert no";
 			}
 		}else {
-			return "update no";
+			s="update no";
 		}			
-		
+		return s;
 	}
 //    public static void main(String[] args) {
 //    	ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");

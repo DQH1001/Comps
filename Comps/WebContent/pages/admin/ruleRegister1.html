@@ -16,9 +16,10 @@
 <!--file upload-->
 <script type="text/javascript" src="../../js/bootstrap-fileupload.min.js"></script>
 <script src="../../js/jquery.form.js" type="text/javascript"></script>
-
+    <link href="../../js/layer.css" rel="stylesheet">
 <!--dropzone-->
 <script src="../../js/dropzone/dropzone.js"></script>
+	<script src="../../js/layer.js"></script>
 	</head>
 <body>
 	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -382,7 +383,7 @@
             $('input[name="c_pros"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数    
                chk_value.push($(this).val());//将选中的值添加到数组chk_value中    
             });		   
-		    alert("demo2: "+chk_value+" - "+foData);
+		   // alert("demo2: "+chk_value+" - "+foData);
 		    $("#form2").ajaxSubmit({
 		    			url: "../../coms/upload.action",    //批量固定路径上传
 		    		    type: 'POST',  
@@ -393,9 +394,9 @@
 		    		    dataType: "text",   //返回的异步数据格式为不能json，必须是文本格式
 		    		    success:function(data){
 		    		    	if(data.indexOf("ok")!=-1){
-		    		    		alert("insert OK!");
+		    		    		layer.msg("insert OK!");
 		    		    	}else{
-		    		    		alert("insert sorry");
+		    		    		layer.msg("insert sorry");
 		    		    	}
 		    			},
 		    		    error:function(){

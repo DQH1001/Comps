@@ -182,6 +182,6 @@ from projects p where FIND_IN_SET(p.pid,#{c_pros}) ;
     select * from comps ORDER BY rand() LIMIT 5;  
     </select>  
     <insert id="insertComps" parameterType="com.ssm.entity.Comps">
-    insert into comps values(null,#{cname},NOW(),1,#{cdetail},#{c_pros},#{clogo},#{cimgs},#{ctext},#{cvideo},#{ctvchoose},0,#{cusername})
+    insert into comps values(null,"123",#{cname},NOW(),1,#{cdetail},#{c_pros},#{clogo},#{cimgs},#{ctext},#{cvideo},#{ctvchoose},0,#{cusername},0)
     </insert>
 </mapper>

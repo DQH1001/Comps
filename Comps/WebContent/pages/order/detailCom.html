@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../lib/layui/css/layui.css">
   <link rel="stylesheet" href="../../lib/layui/css/global.css">
     <link href="../../js/layer.css" rel="stylesheet">
-  <script type="text/javascript" src="../../js/bootstrap-fileupload.min.js"></script>
+
 
 </head>
 <body>
@@ -20,7 +20,7 @@
 
 <div class="weadmin-body" id="app">
   <div class="layui-row layui-col-space15">
-    <div class="layui-col-md8 content detail">
+    <div class="layui-col-md12 content detail">
      
 
       <div class="fly-panel detail-box" id="flyReply">
@@ -156,7 +156,7 @@
         </div>
       </div>
     </div>
-    <div class="layui-col-md4">
+    <!-- <div class="layui-col-md4">
       <dl class="fly-panel fly-list-one">
         <dt class="fly-panel-title">本周热议</dt>
         <dd>
@@ -192,7 +192,7 @@
 
 
 
-    </div>
+    </div> -->
   </div>
 </div>
 <script src="../../js/jquery-1.10.2.min.js"></script>
@@ -271,26 +271,30 @@
 				},
 				sub(){
 					$("#cidd").val(this.usernifo.cid);//cid
-					
-					
+					if($("#wcont").val()==null||$("#wcont").val()==""||$("#wtit").val()==null||$("#wtit").val()==""){
+						layer.msg("主题或内容不能为空");
+						return;
+					}
 					var foData=new FormData($("#form2")[0]);			
 					 let config = { headers: { 'Content-Type': 'multipart/form-data' } };
 				        this.uping = 1;
 				        this.$http.post('../../coms/uploadImg.action', foData,config).then(function (res) {
-				        	alert("--------");
-				        },function(res){
-				        	
-				        	
+				        	if(res.body.indexOf("ok")!=-1){
 				        		layer.msg("发布成功");
-					    		this.getCompsWords();					    		 
-					    		$("#wtit").val("");
-					    		$("#sidd").val("0");
-					    		$("#cidd").val(this.usernifo.cid);
-					    		$("#widd").val("0");
-					    		$("#whid").val("0");
-					    		$("#wcont").val("");
-					    		$('#showImg').css('display','none');
-					         	
+				        	}
+				        	else{
+				        		layer.msg("发布失败");
+				        	}
+				    		this.getCompsWords();					    		 
+				    		$("#wtit").val("");
+				    		$("#sidd").val("0");
+				    		$("#cidd").val(this.usernifo.cid);
+				    		$("#widd").val("0");
+				    		$("#whid").val("0");
+				    		$("#wcont").val("");
+				    		$('#showImg').css('display','none');
+				        },function(res){
+							  alert("error") 
 						 });	
 
 				}
