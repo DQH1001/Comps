@@ -83,16 +83,16 @@ public class CompsController {
 		String pathRoot=request.getRealPath("upload/comps/");
 		
 		//台式机路径
-		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
-		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
-		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
-		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+//		String pathRootTxt="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+//		String pathRootClogo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+//		String pathRootLunbo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+//		String pathRootVideo="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
 		
 		//平板路径
-//		String pathRootTxt="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
-//		String pathRootClogo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
-//		String pathRootLunbo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
-//		String pathRootVideo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
+		String pathRootTxt="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\txt\\";
+		String pathRootClogo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\clogo\\";
+		String pathRootLunbo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\images\\imglunbo\\";
+		String pathRootVideo="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\video\\";
 		
 		String path="";
 		List<String> listImagePath=new ArrayList<String>();
@@ -272,9 +272,9 @@ public class CompsController {
 		String pathRoot=request.getRealPath("upload/comps/");
 		
 		//台式机路径
-		String pathRootImg="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
+//		String pathRootImg="C:\\Users\\AD钙\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
 		//平板路径
-//		String pathRootImg="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
+		String pathRootImg="C:\\Users\\11040\\git\\WeAdmin\\WeAdmin\\WebContent\\upload\\";
 		if(!file.isEmpty()){				
 			//生成uuid作为文件名称
 			//String uuid = UUID.randomUUID().toString().replaceAll("-","");
